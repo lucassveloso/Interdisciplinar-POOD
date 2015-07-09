@@ -10,7 +10,10 @@
 
 <h:head>
 	<title>Cadastro de Pessoa</title>
+	<script src="js/jquery.js"></script>
+	<script src="js/pessoa.js"></script>
 <script>
+
 function duplicarCampos(){
 		var clone = document.getElementById('deficiencias').cloneNode(true);
 		var destino = document.getElementById('destino');
@@ -64,14 +67,11 @@ function duplicarCampos(){
 			 <f:selectItems value="#{religiaoMB.religiaoList}" var="religiao" itemValue="#{religiao.idReligiao}" itemLabel="#{religiao.descricao}"  />
 		</h:selectOneMenu>
 		<p></p>
-		<h:outputText value="Deficiência: " /><button type="button" id="botaoAdd" onclick="duplicarCampos()">+</button>
-		<div id="destino">
-		<div id="deficiencias"> 
-		<h:selectOneMenu value="#{pessoaMB.idDeficiencia}">
-			 <f:selectItems value="#{deficienciaMB.deficienciaList}" var="deficiencia" itemValue="#{deficiencia.idDeficiencia}" itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}"  />
+		<h:outputText value="Deficiência: " />
+		<div id="divDeficiencia"> 
+		<h:selectOneMenu class="dropdownDeficiencias" value="#{pessoaMB.idDeficiencia}" onchange = "adicionaDeficiencia()">
+			 <f:selectItems class="deficiencia" value="#{deficienciaMB.deficienciaList}" var="deficiencia" itemValue="#{deficiencia.idDeficiencia}" itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}"  />
 		</h:selectOneMenu>
-		</div>
-
 		</div>
 		<p></p>
        	<h:commandButton action="#{pessoaMB.gravar}" value="Gravar"/>

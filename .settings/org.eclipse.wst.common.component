@@ -2,7 +2,7 @@
     <wb-module deploy-name="Trabalho01_N2_Alexandre_Lucas">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="Trabalho01_N2_Alexandre_Lucas"/>
         <property name="java-output-path" value="/Trabalho01_N2_Alexandre_Lucas/build/classes"/>
+        <property name="context-root" value="Interdisciplinar-POOD"/>
     </wb-module>
 </project-modules>
