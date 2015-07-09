@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<f:event listener="#{loginMB.isLogado}" type="preRenderView" />
+
+<h:head>
+	<title>Cadastro de Deficiencia</title>
+
+</h:head>
+
+<h:body>
+	<h:form>
+		<h:outputLabel value="Id: " />
+		<h:inputText value="#{deficienciaMB.idDeficiencia}"></h:inputText>
+		<p></p>
+		<h:outputLabel value="Descrição: " />
+		<h:inputText value="#{deficienciaMB.descricao}"></h:inputText>
+		<p></p>
+		<h:outputLabel value="Grau: " />
+		<h:inputText value="#{deficienciaMB.grau}"></h:inputText>
+	<p></p>
+       <h:commandButton action="#{deficienciaMB.gravar}" value="Gravar"/>
+       <h:commandButton action="agenda" value="Cancelar"/><br/>
+		<br />
+		<p></p>
+		<h:outputText value="#{deficienciaMB.msgAviso}" />
+		<h:messages id="msgErro" style="color: red"></h:messages>
+
+	</h:form>
+</h:body>
+</html>

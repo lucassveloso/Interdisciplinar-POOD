@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+
+
+<h:head>
+	<title>Cadastro de Pessoa</title>
+<script>
+function duplicarCampos(){
+		var clone = document.getElementById('deficiencias').cloneNode(true);
+		var destino = document.getElementById('destino');
+		destino.appendChild (clone);
+		
+		
+	
+		
+	
+	}
+
+	function removerCampos(id){
+		var node1 = document.getElementById('destino');
+		node1.removeChild(node1.childNodes[0]);
+	}
+
+
+
+</script>
+</h:head>
+
+<h:body>
+	<h:form>
+		<h:outputLabel value="IdPessoa: " />
+		<h:inputText value="#{pessoaMB.idPessoa}"></h:inputText>
+		<p></p>
+		<h:outputLabel value="Nome: " />
+		<h:inputText value="#{pessoaMB.nome}"></h:inputText>
+		<p></p>
+		<h:outputLabel value="Nome Social:  " />
+		<h:inputText value="#{pessoaMB.nomeSocial}"></h:inputText>
+		<p></p>
+    	<h:outputText value="Sexo: " />
+		<h:selectOneMenu value="#{pessoaMB.idSexo}">
+			 <f:selectItems value="#{sexoMB.sexoList}" var="sexo" itemValue="#{sexo.idSexo}" itemLabel="#{sexo.descricao}"  />
+		</h:selectOneMenu>
+		<p></p>
+		<h:outputLabel value="CEP:  " />
+		<h:inputText value="#{pessoaMB.cep}"></h:inputText>
+		<p></p>
+		<h:outputLabel value="Logradouro:  " />
+		<h:inputText value="#{pessoaMB.logradouro}"></h:inputText>
+		<p></p>
+		<h:outputText value="Etnia: " />
+		<h:selectOneMenu value="#{pessoaMB.idEtnia}">
+			 <f:selectItems value="#{etniaMB.etniaList}" var="etnia" itemValue="#{etnia.idEtnia}" itemLabel="#{etnia.descricao}"  />
+		</h:selectOneMenu>
+		<p></p>
+		<h:outputText value="Religião: " />
+		<h:selectOneMenu value="#{pessoaMB.idReligiao}">
+			 <f:selectItems value="#{religiaoMB.religiaoList}" var="religiao" itemValue="#{religiao.idReligiao}" itemLabel="#{religiao.descricao}"  />
+		</h:selectOneMenu>
+		<p></p>
+		<h:outputText value="Deficiência: " /><button type="button" id="botaoAdd" onclick="duplicarCampos()">+</button>
+		<div id="destino">
+		<div id="deficiencias"> 
+		<h:selectOneMenu value="#{pessoaMB.idDeficiencia}">
+			 <f:selectItems value="#{deficienciaMB.deficienciaList}" var="deficiencia" itemValue="#{deficiencia.idDeficiencia}" itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}"  />
+		</h:selectOneMenu>
+		</div>
+
+		</div>
+		<p></p>
+       	<h:commandButton action="#{pessoaMB.gravar}" value="Gravar"/>
+       	<h:commandButton action="agenda" value="Cancelar"/><br/>
+		<br />
+		<p></p>
+		<h:outputText value="#{pessoaMB.msgAviso}" />
+		<h:messages id="msgErro" style="color: red"></h:messages>
+
+	</h:form>
+</h:body>
+</html>
+
