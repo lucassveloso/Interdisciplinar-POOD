@@ -8,7 +8,7 @@ import br.edu.qi.dto.Deficiencia;
 public class DeficienciaDao extends GenericDao implements IDao<Deficiencia> {
 
 	private static final String INSERT = "insert into "
-			+ "deficiencias values(?,?,?)";;
+			+ "deficiencias(descricao,grau) values(?,?)";
 
 	private static final String SELECT = "select * from "
 			+ "deficiencias where Id_deficencia=?";
@@ -16,7 +16,7 @@ public class DeficienciaDao extends GenericDao implements IDao<Deficiencia> {
 	private static final String FINDALL = "select * from deficiencias";
 
 	public void save(Deficiencia obj) throws Exception {
-		executeSQL(INSERT, obj.getIdDeficiencia(), obj.getDescricao(),
+		executeSQL(INSERT, obj.getDescricao(),
 				obj.getGrau());
 	}
 
@@ -25,10 +25,10 @@ public class DeficienciaDao extends GenericDao implements IDao<Deficiencia> {
 		try {
 			ResultSet rs = executeQuery(SELECT, obj.getIdDeficiencia());
 			if (rs.next()) {
-				return l = new Deficiencia(Integer.parseInt(rs
-						.getString("Id_deficencia")),
-						rs.getString("descricao"), Integer.parseInt(rs
-								.getString("grau")));
+				return l = new Deficiencia(
+						rs.getInt("Id_deficencia"),
+						rs.getString("descricao"), 
+						rs.getInt("grau"));
 			}
 		} catch (Exception e) {
 			throw new Exception("Id incorreto! " + e.getMessage());
@@ -41,10 +41,10 @@ public class DeficienciaDao extends GenericDao implements IDao<Deficiencia> {
 		try {
 			ResultSet rs = executeQuery(FINDALL);
 			while (rs.next()) {
-				l.add(new Deficiencia(Integer.parseInt(rs
-						.getString("Id_deficencia")),
-						rs.getString("descricao"), Integer.parseInt(rs
-								.getString("grau"))));
+				l.add(new Deficiencia(
+						rs.getInt("Id_deficencia"),
+						rs.getString("descricao"), 
+						rs.getInt("grau")));
 			}
 		} catch (Exception e) {
 			throw new Exception(
@@ -52,12 +52,6 @@ public class DeficienciaDao extends GenericDao implements IDao<Deficiencia> {
 							+ e.getMessage());
 		}
 		return l;
-	}
-
-	@Override
-	public void delete(Deficiencia obj) throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

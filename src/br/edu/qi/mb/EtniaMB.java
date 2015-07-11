@@ -14,7 +14,6 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.servlet.http.HttpSession;
 
 import br.edu.qi.bean.EtniaBean;
-import br.edu.qi.dto.Contato;
 import br.edu.qi.dto.Etnia;
 import br.edu.qi.util.Numeric;
 

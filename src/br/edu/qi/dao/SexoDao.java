@@ -19,7 +19,7 @@ public class SexoDao extends GenericDao implements IDao<Sexo> {
 			ResultSet rs = executeQuery(SELECT, obj.getIdSexo());
 			if (rs.next()) {
 				return l = new Sexo(
-						Integer.parseInt(rs.getString("Id_sexo")),
+						rs.getInt("Id_sexo"),
 						rs.getString("descricao"));
 			}
 		} catch (Exception e) {
@@ -35,7 +35,7 @@ public class SexoDao extends GenericDao implements IDao<Sexo> {
 			ResultSet rs = executeQuery(FINDALL);
 			while (rs.next()) {
 				l.add(new Sexo(
-						Integer.parseInt(rs.getString("Id_sexo")),
+						rs.getInt("Id_sexo"),
 						rs.getString("descricao")));
 			}
 		} catch (Exception e) {
@@ -46,11 +46,7 @@ public class SexoDao extends GenericDao implements IDao<Sexo> {
 		return l;
 	}
 
-	@Override
-	public void delete(Sexo obj) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void save(Sexo obj) throws Exception {

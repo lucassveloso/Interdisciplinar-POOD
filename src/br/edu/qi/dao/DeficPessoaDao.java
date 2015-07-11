@@ -17,23 +17,11 @@ public class DeficPessoaDao extends GenericDao implements IDao<DeficPessoa> {
 	}
 
 
-
-	@Override
-	public void delete(DeficPessoa obj) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
 	@Override
 	public DeficPessoa find(DeficPessoa obj) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 	@Override
 	public ArrayList<?> findAll() throws Exception {

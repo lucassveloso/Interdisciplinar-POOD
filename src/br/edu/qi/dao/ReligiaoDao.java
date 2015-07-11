@@ -19,7 +19,7 @@ public class ReligiaoDao extends GenericDao implements IDao<Religiao> {
 			ResultSet rs = executeQuery(SELECT, obj.getIdReligiao());
 			if (rs.next()) {
 				return l = new Religiao(
-						Integer.parseInt(rs.getString("Id_religiao")),
+						rs.getInt("Id_religiao"),
 						rs.getString("descricao"));
 			}
 		} catch (Exception e) {
@@ -34,7 +34,7 @@ public class ReligiaoDao extends GenericDao implements IDao<Religiao> {
 			ResultSet rs = executeQuery(FINDALL);
 			while (rs.next()) {
 				l.add(new Religiao(
-						Integer.parseInt(rs.getString("Id_religiao")),
+						rs.getInt("Id_religiao"),
 						rs.getString("descricao")));
 			}
 		} catch (Exception e) {
@@ -52,11 +52,6 @@ public class ReligiaoDao extends GenericDao implements IDao<Religiao> {
 		
 	}
 
-	@Override
-	public void delete(Religiao obj) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }

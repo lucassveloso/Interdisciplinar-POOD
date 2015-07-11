@@ -1,21 +1,21 @@
 package br.edu.qi.dto;
 
-public class Etnia {
+public class Curso {
 
-	private int idEtnia;
+	private int idCurso;
 	private String descricao;
 
-	public Etnia(int idEtnia, String descricao) {
-		this.idEtnia = idEtnia;
+	public Curso(int idCurso, String descricao) {
+		this.idCurso = idCurso;
 		this.descricao = descricao;
 	}
 
-	public int getIdEtnia() {
-		return idEtnia;
+	public int getIdCurso() {
+		return idCurso;
 	}
 
-	public void setIdEtnia(int idEtnia) {
-		this.idEtnia = idEtnia;
+	public void setIdCurso(int idCurso) {
+		this.idCurso = idCurso;
 	}
 
 	public String getDescricao() {

@@ -3,33 +3,37 @@ package br.edu.qi.dto;
 public class Horario {
 
 	private int idHorario;
-	private int idDia;
-	private String descricao;
-	public Horario(int idHorario, int idDia, String descricao) {
-		super();
+	private String dia;
+	private String turno;
+
+	public Horario(int idHorario, String dia, String turno) {
 		this.idHorario = idHorario;
-		this.idDia = idDia;
-		this.descricao = descricao;
+		this.dia = dia;
+		this.turno = turno;
 	}
+
 	public int getIdHorario() {
 		return idHorario;
 	}
+
 	public void setIdHorario(int idHorario) {
 		this.idHorario = idHorario;
 	}
-	public int getIdDia() {
-		return idDia;
+
+	public String getDia() {
+		return dia;
 	}
-	public void setIdDia(int idDia) {
-		this.idDia = idDia;
+
+	public void setDia(String dia) {
+		this.dia = dia;
 	}
-	public String getDescricao() {
-		return descricao;
+
+	public String getTurno() {
+		return turno;
 	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+
+	public void setTurno(String turno) {
+		this.turno = turno;
 	}
-	
-	
-	
+
 }

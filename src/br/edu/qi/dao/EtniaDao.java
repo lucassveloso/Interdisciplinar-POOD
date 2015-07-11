@@ -19,7 +19,7 @@ public class EtniaDao extends GenericDao implements IDao<Etnia> {
 			ResultSet rs = executeQuery(SELECT, obj.getIdEtnia());
 			if (rs.next()) {
 				return l = new Etnia(
-						Integer.parseInt(rs.getString("Id_etnia")),
+						rs.getInt("Id_etnia"),
 						rs.getString("descricao"));
 			}
 		} catch (Exception e) {
@@ -34,7 +34,7 @@ public class EtniaDao extends GenericDao implements IDao<Etnia> {
 			ResultSet rs = executeQuery(FINDALL);
 			while (rs.next()) {
 				l.add(new Etnia(
-						Integer.parseInt(rs.getString("Id_etnia")),
+						rs.getInt("Id_etnia"),
 						rs.getString("descricao")));
 			}
 		} catch (Exception e) {
@@ -43,12 +43,6 @@ public class EtniaDao extends GenericDao implements IDao<Etnia> {
 							+ e.getMessage());
 		}
 		return l;
-	}
-
-	@Override
-	public void delete(Etnia obj) throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

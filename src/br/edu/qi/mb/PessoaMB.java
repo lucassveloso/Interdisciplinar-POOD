@@ -34,6 +34,7 @@ public class PessoaMB {
 	public String nome;
 	public String nomeSocial;
 	public String logradouro;
+	public String tipo_pessoa;
 	public String idEtnia;
 	public String idReligiao;
 	public String idSexo;
@@ -180,6 +181,21 @@ public class PessoaMB {
 	}
 
 
+	
+
+
+	public String getTipo_pessoa() {
+		return tipo_pessoa;
+	}
+
+
+
+
+	public void setTipo_pessoa(String tipo_pessoa) {
+		this.tipo_pessoa = tipo_pessoa;
+	}
+
+
 
 
 	public String getMsgAviso() {
@@ -247,6 +263,7 @@ public class PessoaMB {
 					Integer.parseInt(this.cep),
 					this.logradouro,
 					this.nomeSocial,
+					this.tipo_pessoa,
 					this.nome,
 					Integer.parseInt(this.idEtnia),
 					Integer.parseInt(this.idReligiao),
