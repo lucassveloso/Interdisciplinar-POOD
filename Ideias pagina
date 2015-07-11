@@ -1,0 +1,55 @@
+Pessoa:
+  Nome
+  Nome Social
+  Sexo-CB
+  Etnia-CB
+  CEP
+  Logradouro
+  Religião-CB
+  Deficiencias - Desc/Grau -NCB
+  Telefones-NCB
+  Tipo:
+    Professor - Formação
+    Aluno - Forma Pagamento
+    Funcionario - Data Admissão, Cargo
+  Filiação 1 - Desc
+  Filiação 2 - Desc
+  Dias Disponiveis - Dias/Turno -NCB
+  
+Deficiencia
+  Desc
+  Grau
+
+Usuario
+  Pessoa-CB
+  Login
+  Senha
+  Repita Senha
+  
+Item
+  Desc
+  Valor
+  Tipo:
+    Produto - Qtde, Local
+    Serviço - Especificação, Duração
+    
+Venda
+  (Cara Logado)
+  Itens - Qtde -NCB
+  Data
+  (Valor Total)
+  
+Aula
+  Data Inicio
+  Data Fim
+  Horario - Dia/Turno -NCB
+  Capacidade
+  Professor-CB
+  Produtos-NCB
+  Tema
+  Curso-CB
+  
+Matricula
+  Turma
+  Aluno-NCB (Horario, Capacidade - AJAX)
+  
