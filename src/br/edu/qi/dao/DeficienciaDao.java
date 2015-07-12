@@ -11,7 +11,7 @@ public class DeficienciaDao extends GenericDao implements IDao<Deficiencia> {
 			+ "deficiencias(descricao,grau) values(?,?)";
 
 	private static final String SELECT = "select * from "
-			+ "deficiencias where Id_deficencia=?";
+			+ "deficiencias where Id_deficiencia=?";
 
 	private static final String FINDALL = "select * from deficiencias";
 
@@ -26,7 +26,7 @@ public class DeficienciaDao extends GenericDao implements IDao<Deficiencia> {
 			ResultSet rs = executeQuery(SELECT, obj.getIdDeficiencia());
 			if (rs.next()) {
 				return l = new Deficiencia(
-						rs.getInt("Id_deficencia"),
+						rs.getInt("Id_deficiencia"),
 						rs.getString("descricao"), 
 						rs.getInt("grau"));
 			}
@@ -42,7 +42,7 @@ public class DeficienciaDao extends GenericDao implements IDao<Deficiencia> {
 			ResultSet rs = executeQuery(FINDALL);
 			while (rs.next()) {
 				l.add(new Deficiencia(
-						rs.getInt("Id_deficencia"),
+						rs.getInt("Id_deficiencia"),
 						rs.getString("descricao"), 
 						rs.getInt("grau")));
 			}

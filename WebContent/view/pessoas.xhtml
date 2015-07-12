@@ -10,27 +10,14 @@
 
 <h:head>
 	<title>Cadastro de Pessoa</title>
-	<script src="js/jquery.js"></script>
-	<script src="js/pessoa.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
 
-function duplicarCampos(){
-		var clone = document.getElementById('deficiencias').cloneNode(true);
-		var destino = document.getElementById('destino');
-		destino.appendChild (clone);
-		
-		
-	
-		
-	
-	}
-
-	function removerCampos(id){
-		var node1 = document.getElementById('destino');
-		node1.removeChild(node1.childNodes[0]);
-	}
-
-
+var adicionaDeficiencia = function (div) {
+    $template = $(".dropdownDeficiencia").clone()[0];
+    $("#divDeficiencia").append($template)
+}
 
 </script>
 </h:head>
@@ -67,9 +54,9 @@ function duplicarCampos(){
 			 <f:selectItems value="#{religiaoMB.religiaoList}" var="religiao" itemValue="#{religiao.idReligiao}" itemLabel="#{religiao.descricao}"  />
 		</h:selectOneMenu>
 		<p></p>
-		<h:outputText value="Deficiência: " />
+		<h:outputText value="Deficiência: " /> <button type="button" onclick = "adicionaDeficiencia()">+</button>
 		<div id="divDeficiencia"> 
-		<h:selectOneMenu class="dropdownDeficiencias" value="#{pessoaMB.idDeficiencia}" onchange = "adicionaDeficiencia()">
+		<h:selectOneMenu class="dropdownDeficiencia" value="#{pessoaMB.idDeficiencia}">
 			 <f:selectItems class="deficiencia" value="#{deficienciaMB.deficienciaList}" var="deficiencia" itemValue="#{deficiencia.idDeficiencia}" itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}"  />
 		</h:selectOneMenu>
 		</div>
