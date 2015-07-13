@@ -4,26 +4,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
-
-
-
-
+	
 <h:head>
 	<title>Cadastro de Pessoa</title>
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
-
-var adicionaDeficiencia = function (div) {
-    $template = $(".dropdownDeficiencia").clone()[0];
-    $("#divDeficiencia").append($template)
+var adicionaIgual = function () {
+    var idParent = $(this).parent().attr("id");
+    var classe = $(this).attr("class").split(' ')[0];
+    $template = $("." + classe).clone()[0];
+    $("#" + idParent).append($template)
 }
 
+var adicionaTelefone = function () {
+    var $template = $($(".telefones").clone()[0]).val("");
+    $("#divTelefones").append($template)
+}
+
+$("#btnCadastrar").click(function () {
+    var properties = $("#divProperties").children();
+    for (var i = 0; i < properties.length; i++) {
+        var $property = $(properties[i]);
+        var $items = $("." + $property.attr("id") + "s");
+
+        $.each($items, function (i, item) {
+            $property.append($('<option>', { value: item.value }));
+        });
+
+        //$prop.push($property.val());
+    }
+    document.forms["formCreate"].submit();
+});
 </script>
 </h:head>
 
 <h:body>
-	<h:form>
+	<h:form name="formCreate">
+		<div id="divProperties" hidden> 
+			<h:selectOneMenu class="deficiencia" value="#{pessoaMB.idDeficiencia}" type="hidden">
+				<f:selectItems class="deficiencia" value="#{deficienciaMB.deficienciaListSelecionados}" />
+			</h:selectOneMenu>
+		</div>
+		
 		<h:outputLabel value="IdPessoa: " />
 		<h:inputText value="#{pessoaMB.idPessoa}"></h:inputText>
 		<p></p>
@@ -57,11 +80,11 @@ var adicionaDeficiencia = function (div) {
 		<h:outputText value="Deficiência: " /> <button type="button" onclick = "adicionaDeficiencia()">+</button>
 		<div id="divDeficiencia"> 
 		<h:selectOneMenu class="dropdownDeficiencia" value="#{pessoaMB.idDeficiencia}">
-			 <f:selectItems class="deficiencia" value="#{deficienciaMB.deficienciaList}" var="deficiencia" itemValue="#{deficiencia.idDeficiencia}" itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}"  />
+			 <f:selectItems class="deficiencias" value="#{deficienciaMB.deficienciaList}" var="deficiencia" itemValue="#{deficiencia.idDeficiencia}" itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}"  />
 		</h:selectOneMenu>
 		</div>
 		<p></p>
-       	<h:commandButton action="#{pessoaMB.gravar}" value="Gravar"/>
+       	<h:commandButton action="#{pessoaMB.gravar}" value="Gravar" id="btnCadastrar"/>
        	<h:commandButton action="agenda" value="Cancelar"/><br/>
 		<br />
 		<p></p>
