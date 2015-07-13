@@ -7,8 +7,7 @@
 	
 <h:head>
 	<title>Cadastro de Pessoa</title>
-	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
 var adicionaIgual = function () {
     var idParent = $(this).parent().attr("id");
@@ -79,7 +78,7 @@ $("#btnCadastrar").click(function () {
 		<p></p>
 		<h:outputText value="Deficiência: " /> <button type="button" onclick = "adicionaDeficiencia()">+</button>
 		<div id="divDeficiencia"> 
-		<h:selectOneMenu class="dropdownDeficiencia" value="#{pessoaMB.idDeficiencia}">
+		<h:selectOneMenu class="dropdownDeficiencia" value="#{pessoaMB.idDeficiencia}" onchange="adicionaIgual()">
 			 <f:selectItems class="deficiencias" value="#{deficienciaMB.deficienciaList}" var="deficiencia" itemValue="#{deficiencia.idDeficiencia}" itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}"  />
 		</h:selectOneMenu>
 		</div>
