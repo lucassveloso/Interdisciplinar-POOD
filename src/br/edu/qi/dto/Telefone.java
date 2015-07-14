@@ -6,8 +6,13 @@ public class Telefone {
 	private int idPessoa;
 	private String telefone;
 
-	public Telefone(int idTelefone, int idPessoa, String telefone) {
+	public Telefone(int idTelefone ,int idPessoa, String telefone) {
 		this.idTelefone = idTelefone;
+		this.idPessoa = idPessoa;
+		this.telefone = telefone;
+	}
+	
+	public Telefone(int idPessoa, String telefone) {
 		this.idPessoa = idPessoa;
 		this.telefone = telefone;
 	}

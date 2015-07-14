@@ -4,87 +4,100 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
-	
+
 <h:head>
 	<title>Cadastro de Pessoa</title>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script>
-var adicionaIgual = function () {
-    var idParent = $(this).parent().attr("id");
-    var classe = $(this).attr("class").split(' ')[0];
-    $template = $("." + classe).clone()[0];
-    $("#" + idParent).append($template)
-}
-
-var adicionaTelefone = function () {
-    var $template = $($(".telefones").clone()[0]).val("");
-    $("#divTelefones").append($template)
-}
-
-$("#btnCadastrar").click(function () {
-    var properties = $("#divProperties").children();
-    for (var i = 0; i < properties.length; i++) {
-        var $property = $(properties[i]);
-        var $items = $("." + $property.attr("id") + "s");
-
-        $.each($items, function (i, item) {
-            $property.append($('<option>', { value: item.value }));
-        });
-
-        //$prop.push($property.val());
-    }
-    document.forms["formCreate"].submit();
-});
-</script>
+	<link rel="stylesheet" type="text/css" href="css/pessoas.css"/>
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/pessoas.js"></script>
 </h:head>
 
 <h:body>
 	<h:form name="formCreate">
-		<div id="divProperties" hidden> 
-			<h:selectOneMenu class="deficiencia" value="#{pessoaMB.idDeficiencia}" type="hidden">
-				<f:selectItems class="deficiencia" value="#{deficienciaMB.deficienciaListSelecionados}" />
-			</h:selectOneMenu>
-		</div>
-		
-		<h:outputLabel value="IdPessoa: " />
-		<h:inputText value="#{pessoaMB.idPessoa}"></h:inputText>
-		<p></p>
 		<h:outputLabel value="Nome: " />
 		<h:inputText value="#{pessoaMB.nome}"></h:inputText>
 		<p></p>
 		<h:outputLabel value="Nome Social:  " />
 		<h:inputText value="#{pessoaMB.nomeSocial}"></h:inputText>
 		<p></p>
-    	<h:outputText value="Sexo: " />
+		<h:outputText value="Sexo: " />
 		<h:selectOneMenu value="#{pessoaMB.idSexo}">
-			 <f:selectItems value="#{sexoMB.sexoList}" var="sexo" itemValue="#{sexo.idSexo}" itemLabel="#{sexo.descricao}"  />
+			<f:selectItems value="#{sexoMB.sexoList}" var="sexo"
+				itemValue="#{sexo.idSexo}" itemLabel="#{sexo.descricao}" />
 		</h:selectOneMenu>
-		<p></p>
-		<h:outputLabel value="CEP:  " />
-		<h:inputText value="#{pessoaMB.cep}"></h:inputText>
 		<p></p>
 		<h:outputLabel value="Logradouro:  " />
 		<h:inputText value="#{pessoaMB.logradouro}"></h:inputText>
 		<p></p>
+		<h:outputLabel value="CEP:  " />
+		<h:inputText value="#{pessoaMB.cep}"></h:inputText>
+		<p></p>
 		<h:outputText value="Etnia: " />
 		<h:selectOneMenu value="#{pessoaMB.idEtnia}">
-			 <f:selectItems value="#{etniaMB.etniaList}" var="etnia" itemValue="#{etnia.idEtnia}" itemLabel="#{etnia.descricao}"  />
+			<f:selectItems value="#{etniaMB.etniaList}" var="etnia"
+				itemValue="#{etnia.idEtnia}" itemLabel="#{etnia.descricao}" />
 		</h:selectOneMenu>
 		<p></p>
 		<h:outputText value="Religião: " />
 		<h:selectOneMenu value="#{pessoaMB.idReligiao}">
-			 <f:selectItems value="#{religiaoMB.religiaoList}" var="religiao" itemValue="#{religiao.idReligiao}" itemLabel="#{religiao.descricao}"  />
+			<f:selectItems value="#{religiaoMB.religiaoList}" var="religiao"
+				itemValue="#{religiao.idReligiao}" itemLabel="#{religiao.descricao}" />
 		</h:selectOneMenu>
 		<p></p>
-		<h:outputText value="Deficiência: " /> <button type="button" onclick = "adicionaDeficiencia()">+</button>
-		<div id="divDeficiencia"> 
-		<h:selectOneMenu class="dropdownDeficiencia" value="#{pessoaMB.idDeficiencia}" onchange="adicionaIgual()">
-			 <f:selectItems class="deficiencias" value="#{deficienciaMB.deficienciaList}" var="deficiencia" itemValue="#{deficiencia.idDeficiencia}" itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}"  />
-		</h:selectOneMenu>
+		<h:outputText value="Deficiência: " />
+		<div id="divDeficiencia">
+			<h:selectOneMenu class="dropdownDeficiencia"
+				value="#{pessoaMB.idDeficiencia}">
+				<f:selectItems class="deficiencias"
+					value="#{deficienciaMB.deficienciaList}" var="deficiencia"
+					itemValue="#{deficiencia.idDeficiencia}"
+					itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}" />
+			</h:selectOneMenu>
 		</div>
 		<p></p>
-       	<h:commandButton action="#{pessoaMB.gravar}" value="Gravar" id="btnCadastrar"/>
-       	<h:commandButton action="agenda" value="Cancelar"/><br/>
+		<h:outputLabel value="Telefone:  " />
+		<h:inputText value="#{pessoaMB.telefone}"></h:inputText>
+		<h:outputLabel value="Celular  " />
+		<h:inputText value="#{pessoaMB.celular}"></h:inputText>
+		<p></p>
+		<h:outputLabel value="Nome do Pai:  " />
+		<h:inputText value="#{pessoaMB.pai}"></h:inputText>
+		<h:outputLabel value="Nome da Mãe  " />
+		<h:inputText value="#{pessoaMB.mae}"></h:inputText>
+		<p></p>
+		<h:outputLabel value="Tipo de usuário: " />
+		<select id="cbTipo" onchange="selecionaTipo()">
+			<option value="0">Selecione...</option>
+			<option value="aluno">Aluno</option>
+			<option value="funcionario">Funcionário</option>
+			<option value="professor">Professor</option>
+		</select>
+		<h:inputText id="tipoEscondido" value="#{pessoaMB.tipoPessoa}"></h:inputText>
+		<p></p>
+		<div class="divtipos" id="aluno">
+			<h:outputLabel value="Forma de Pagamento:  " />
+			<h:inputText value="#{pessoaMB.formaPagamento}"></h:inputText>
+		</div>
+		<p></p>
+		<div class="divtipos" id="funcionario">
+			<h:outputLabel value="Cargo " />
+			<h:inputText value="#{pessoaMB.cargo}"></h:inputText>
+			<h:outputLabel value="Data de Admissão: " />
+			<h:inputText value="#{pessoaMB.dataAdmissao}">
+			<f:convertDateTime pattern="d-M-yyyy" />
+			</h:inputText>
+		</div>
+		<p></p>
+		<div class="divtipos" id="professor">
+			<h:outputLabel value="Formação: " />
+			<h:inputText value="#{pessoaMB.formacao}"></h:inputText>
+		</div>
+		<p></p>
+		<h:commandButton action="#{pessoaMB.gravar}" value="Gravar"
+			id="btnCadastrar" />
+		<h:commandButton action="agenda" value="Cancelar" />
+		<br />
 		<br />
 		<p></p>
 		<h:outputText value="#{pessoaMB.msgAviso}" />

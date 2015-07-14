@@ -14,9 +14,13 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.servlet.http.HttpSession;
 
 import br.edu.qi.bean.DeficPessoaBean;
+import br.edu.qi.bean.FiliacaoBean;
 import br.edu.qi.bean.PessoaBean;
+import br.edu.qi.bean.TelefoneBean;
 import br.edu.qi.dto.DeficPessoa;
+import br.edu.qi.dto.Filiacao;
 import br.edu.qi.dto.Pessoa;
+import br.edu.qi.dto.Telefone;
 import br.edu.qi.util.Numeric;
 
 @ManagedBean
@@ -28,18 +32,30 @@ public class PessoaMB {
 	PessoaBean ejb;
 	@EJB
 	DeficPessoaBean ejbDeficPessoa;
+	@EJB
+	TelefoneBean ejbTelefone;
+	@EJB
+	FiliacaoBean ejbFiliacao;
 	
 	public String idPessoa;
 	public String cep;
 	public String nome;
 	public String nomeSocial;
 	public String logradouro;
-	public String tipo_pessoa;
 	public String idEtnia;
 	public String idReligiao;
 	public String idSexo;
 	public String msgAviso;
 	public String idDeficiencia;
+	public String telefone;
+	public String celular;
+	public String pai;
+	public String mae;
+	public String tipoPessoa;
+	public String formaPagamento;
+	public String cargo;
+	public String formacao;
+	public String dataAdmissao;
 	public ArrayList<Pessoa> pessoaList;
 
 	public ArrayList<Pessoa> getPessoaList() {
@@ -53,8 +69,6 @@ public class PessoaMB {
 		}
 	}
 
-	
-	
 
 	public String getIdPessoa() {
 		return idPessoa;
@@ -180,22 +194,95 @@ public class PessoaMB {
 		this.idDeficiencia = idDeficiencia;
 	}
 
+	public String getTelefone() {
+		return telefone;
+	}
+
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+
+	public String getCelular() {
+		return celular;
+	}
+
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+
+	public String getPai() {
+		return pai;
+	}
+
+
+	public void setPai(String pai) {
+		this.pai = pai;
+	}
+
+
+	public String getMae() {
+		return mae;
+	}
+
+
+	public void setMae(String mae) {
+		this.mae = mae;
+	}
+
+
+	public String getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
 
 	
 
-
-	public String getTipo_pessoa() {
-		return tipo_pessoa;
+	public String getFormaPagamento() {
+		return formaPagamento;
 	}
 
 
-
-
-	public void setTipo_pessoa(String tipo_pessoa) {
-		this.tipo_pessoa = tipo_pessoa;
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 
 
+	public String getCargo() {
+		return cargo;
+	}
+
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+
+	public String getFormacao() {
+		return formacao;
+	}
+
+
+	public void setFormacao(String formacao) {
+		this.formacao = formacao;
+	}
+
+
+	public String getDataAdmissao() {
+		return dataAdmissao;
+	}
+
+
+	public void setDataAdmissao(String dataAdmissao) {
+		this.dataAdmissao = dataAdmissao;
+	}
 
 
 	public String getMsgAviso() {
@@ -263,7 +350,7 @@ public class PessoaMB {
 					Integer.parseInt(this.cep),
 					this.logradouro,
 					this.nomeSocial,
-					this.tipo_pessoa,
+					this.tipoPessoa,
 					this.nome,
 					Integer.parseInt(this.idEtnia),
 					Integer.parseInt(this.idReligiao),
@@ -272,6 +359,18 @@ public class PessoaMB {
 			
 			DeficPessoa deficPessoa = new DeficPessoa(Integer.parseInt(this.idPessoa), Integer.parseInt(this.idDeficiencia));
 			ejbDeficPessoa.save(deficPessoa);
+			
+			Telefone telefone = new Telefone(Integer.parseInt(this.idPessoa), this.telefone);
+			Telefone celular = new Telefone(Integer.parseInt(this.idPessoa), this.celular);
+
+			ejbTelefone.save(telefone);
+			ejbTelefone.save(celular);
+			
+			Filiacao pai = new Filiacao(this.pai, 1, Integer.parseInt(this.idPessoa), 0);
+			Filiacao mae = new Filiacao(this.mae, 2, Integer.parseInt(this.idPessoa), 0);
+			
+			ejbFiliacao.save(pai);
+			ejbFiliacao.save(mae);
 			
 			this.setMsgAviso("Gravação com sucesso");
 

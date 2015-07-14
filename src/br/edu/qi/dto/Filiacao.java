@@ -17,6 +17,14 @@ public class Filiacao {
 		this.idFiliado = idFiliado;
 		this.idFiliado2 = idFiliado2;
 	}
+	
+	public Filiacao(String descricao, int idTipo,
+			int idFiliado, int idFiliado2) {
+		this.descricao = descricao;
+		this.idTipo = idTipo;
+		this.idFiliado = idFiliado;
+		this.idFiliado2 = idFiliado2;
+	}
 
 	public int getIdFiliacao() {
 		return idFiliacao;
