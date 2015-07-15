@@ -25,7 +25,6 @@ public class DeficienciaMB {
 	@EJB
 	DeficienciaBean ejb;
 	
-	public String idDeficiencia;
 	public String descricao;
 	public String grau;
 	public String msgAviso;
@@ -42,15 +41,6 @@ public class DeficienciaMB {
 		}
 	}
 
-	
-	public String getIdDeficiencia() {
-		return idDeficiencia;
-	}
-
-
-	public void setIdDeficiencia(String idDeficiencia) {
-		this.idDeficiencia = idDeficiencia;
-	}
 
 
 	public String getDescricao() {
@@ -88,12 +78,6 @@ public class DeficienciaMB {
 
 	private void validation() throws Exception {
 		Numeric n = new Numeric();
-		if (this.idDeficiencia.trim().length() == 0)
-			throw new Exception("Informe o Id");
-		
-		if (!n.isNumeric(this.idDeficiencia))
-			throw new Exception("Id apenas numero");
-		
 		if (this.descricao.trim().length() == 0)
 			throw new Exception("Informe a Descricao");
 
@@ -110,7 +94,6 @@ public class DeficienciaMB {
 			this.validation();
 
 			Deficiencia dto = new Deficiencia(
-					Integer.parseInt(this.idDeficiencia),
 					this.descricao,
 					Integer.parseInt(this.grau));
 			ejb.save(dto);

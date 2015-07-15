@@ -2,108 +2,191 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
-
+	xmlns:p="http://primefaces.org/ui">
+<f:event listener="#{usuarioMB.isLogado}" type="preRenderView" />
 <h:head>
 	<title>Cadastro de Pessoa</title>
-	<link rel="stylesheet" type="text/css" href="css/pessoas.css"/>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/pessoas.css" />
+
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script type="text/javascript"
 		src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="js/pessoas.js"></script>
+
 </h:head>
 
 <h:body>
-	<h:form name="formCreate">
-		<h:outputLabel value="Nome: " />
-		<h:inputText value="#{pessoaMB.nome}"></h:inputText>
-		<p></p>
-		<h:outputLabel value="Nome Social:  " />
-		<h:inputText value="#{pessoaMB.nomeSocial}"></h:inputText>
-		<p></p>
-		<h:outputText value="Sexo: " />
-		<h:selectOneMenu value="#{pessoaMB.idSexo}">
-			<f:selectItems value="#{sexoMB.sexoList}" var="sexo"
-				itemValue="#{sexo.idSexo}" itemLabel="#{sexo.descricao}" />
-		</h:selectOneMenu>
-		<p></p>
-		<h:outputLabel value="Logradouro:  " />
-		<h:inputText value="#{pessoaMB.logradouro}"></h:inputText>
-		<p></p>
-		<h:outputLabel value="CEP:  " />
-		<h:inputText value="#{pessoaMB.cep}"></h:inputText>
-		<p></p>
-		<h:outputText value="Etnia: " />
-		<h:selectOneMenu value="#{pessoaMB.idEtnia}">
-			<f:selectItems value="#{etniaMB.etniaList}" var="etnia"
-				itemValue="#{etnia.idEtnia}" itemLabel="#{etnia.descricao}" />
-		</h:selectOneMenu>
-		<p></p>
-		<h:outputText value="Religião: " />
-		<h:selectOneMenu value="#{pessoaMB.idReligiao}">
-			<f:selectItems value="#{religiaoMB.religiaoList}" var="religiao"
-				itemValue="#{religiao.idReligiao}" itemLabel="#{religiao.descricao}" />
-		</h:selectOneMenu>
-		<p></p>
-		<h:outputText value="Deficiência: " />
-		<div id="divDeficiencia">
-			<h:selectOneMenu class="dropdownDeficiencia"
-				value="#{pessoaMB.idDeficiencia}">
-				<f:selectItems class="deficiencias"
-					value="#{deficienciaMB.deficienciaList}" var="deficiencia"
-					itemValue="#{deficiencia.idDeficiencia}"
-					itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}" />
-			</h:selectOneMenu>
-		</div>
-		<p></p>
-		<h:outputLabel value="Telefone:  " />
-		<h:inputText value="#{pessoaMB.telefone}"></h:inputText>
-		<h:outputLabel value="Celular  " />
-		<h:inputText value="#{pessoaMB.celular}"></h:inputText>
-		<p></p>
-		<h:outputLabel value="Nome do Pai:  " />
-		<h:inputText value="#{pessoaMB.pai}"></h:inputText>
-		<h:outputLabel value="Nome da Mãe  " />
-		<h:inputText value="#{pessoaMB.mae}"></h:inputText>
-		<p></p>
-		<h:outputLabel value="Tipo de usuário: " />
-		<select id="cbTipo" onchange="selecionaTipo()">
-			<option value="0">Selecione...</option>
-			<option value="aluno">Aluno</option>
-			<option value="funcionario">Funcionário</option>
-			<option value="professor">Professor</option>
-		</select>
-		<h:inputText id="tipoEscondido" value="#{pessoaMB.tipoPessoa}"></h:inputText>
-		<p></p>
-		<div class="divtipos" id="aluno">
-			<h:outputLabel value="Forma de Pagamento:  " />
-			<h:inputText value="#{pessoaMB.formaPagamento}"></h:inputText>
-		</div>
-		<p></p>
-		<div class="divtipos" id="funcionario">
-			<h:outputLabel value="Cargo " />
-			<h:inputText value="#{pessoaMB.cargo}"></h:inputText>
-			<h:outputLabel value="Data de Admissão: " />
-			<h:inputText value="#{pessoaMB.dataAdmissao}">
-			<f:convertDateTime pattern="d-M-yyyy" />
-			</h:inputText>
-		</div>
-		<p></p>
-		<div class="divtipos" id="professor">
-			<h:outputLabel value="Formação: " />
-			<h:inputText value="#{pessoaMB.formacao}"></h:inputText>
-		</div>
-		<p></p>
-		<h:commandButton action="#{pessoaMB.gravar}" value="Gravar"
-			id="btnCadastrar" />
-		<h:commandButton action="agenda" value="Cancelar" />
-		<br />
-		<br />
-		<p></p>
-		<h:outputText value="#{pessoaMB.msgAviso}" />
-		<h:messages id="msgErro" style="color: red"></h:messages>
-
+	<h:form>
+		<p:menubar autoDisplay="false">
+			<p:submenu label="Usuários">
+				<p:menuitem value="Cadastrar Usuários"
+					url="#{request.pathInfo}/view/pessoas.xhtml" />
+				<p:menuitem value="Cadastrar Deficiencias"
+					url="#{request.pathInfo}/view/deficiencias.xhtml" />
+			</p:submenu>
+			<p:submenu label="Tipos de Imóveis">
+				<p:menuitem value="Cadastrar tipo de imóvel"
+					url="#{request.pathInfo}/view/tipoimovel/cadastro.xhtml"></p:menuitem>
+				<p:menuitem value="Consultar tipos de imóveis"
+					url="#{request.pathInfo}/view/tipoimovel/consultar.xhtml"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Imóvel">
+				<p:menuitem value="Cadastrar imóveis"
+					url="#{request.pathInfo}/view/imovel/cadastro.xhtml"></p:menuitem>
+				<p:menuitem value="Consultar imóveis"
+					url="#{request.pathInfo}/view/imovel/consultar.xhtml"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Cliente">
+				<p:menuitem value="Cadastrar cliente"
+					url="#{request.pathInfo}/view/cliente/cadastro.xhtml"></p:menuitem>
+				<p:menuitem value="Consultar cliente"
+					url="#{request.pathInfo}/view/cliente/consultar.xhtml"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Proposta">
+				<p:menuitem value="Enviar Proposta"
+					url="#{request.pathInfo}/view/proposta/enviar.xhtml"></p:menuitem>
+				<p:menuitem value="Buscar Proposta"
+					url="#{request.pathInfo}/view/proposta/buscar.xhtml"></p:menuitem>
+			</p:submenu>
+			<f:facet name="options">
+				<p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+			</f:facet>
+		</p:menubar>
 	</h:form>
+	<div class="titulo-pagina">
+		<h1>Cadastro de Pessoa</h1>
+	</div>
+	<div class="container-fluid">
+		<div class="bloco-cadastro">
+
+			<h:form name="formulario">
+				<div class="form-group">
+					<div class="col-xs-6 col-md-5 esquerda">
+						<h:outputLabel class="control-label" value="Nome: " />
+						<h:inputText class="form-control" value="#{pessoaMB.nome}"></h:inputText>
+						<p></p>
+						<h:outputLabel class="control-label" value="Nome Social:  " />
+						<h:inputText class="form-control" value="#{pessoaMB.nomeSocial}"></h:inputText>
+						<p></p>
+						<h:outputLabel class="control-label" value="Sexo: " />
+						<h:selectOneMenu class="form-control" value="#{pessoaMB.idSexo}">
+							<f:selectItems value="#{sexoMB.sexoList}" var="sexo"
+								itemValue="#{sexo.idSexo}" itemLabel="#{sexo.descricao}" />
+						</h:selectOneMenu>
+						<p></p>
+						<h:outputLabel class="control-label" value="Logradouro:  " />
+						<h:inputText class="form-control" value="#{pessoaMB.logradouro}"></h:inputText>
+						<p></p>
+						<h:outputLabel class="control-label" value="CEP:  " />
+						<h:inputText class="form-control" value="#{pessoaMB.cep}"></h:inputText>
+						<p></p>
+						<h:outputLabel class="control-label" value="Etnia: " />
+						<h:selectOneMenu class="form-control" value="#{pessoaMB.idEtnia}">
+							<f:selectItems value="#{etniaMB.etniaList}" var="etnia"
+								itemValue="#{etnia.idEtnia}" itemLabel="#{etnia.descricao}" />
+						</h:selectOneMenu>
+						<p></p>
+						<h:outputLabel class="control-label" value="Religião: " />
+						<h:selectOneMenu class="form-control"
+							value="#{pessoaMB.idReligiao}">
+							<f:selectItems value="#{religiaoMB.religiaoList}" var="religiao"
+								itemValue="#{religiao.idReligiao}"
+								itemLabel="#{religiao.descricao}" />
+						</h:selectOneMenu>
+						<p></p>
+
+						<h:outputLabel class="control-label" value="Deficiência: " />
+						<h:selectManyListbox class="form-control" id="subscriptions"
+							value="#{pessoaMB.deficienciaList}"
+							converter="javax.faces.Integer">
+							<f:selectItems class="deficiencias"
+								value="#{deficienciaMB.deficienciaList}" var="deficiencia"
+								itemValue="#{deficiencia.idDeficiencia}"
+								itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}" />
+						</h:selectManyListbox>
+						<p></p>
+					</div>
+					<div class="col-xs-6 col-md-5 direita">
+						<h:outputLabel class="control-label" value="Telefone:  " />
+						<h:inputText class="form-control" value="#{pessoaMB.telefone}"></h:inputText>
+						<h:outputLabel class="control-label" value="Celular  " />
+						<h:inputText class="form-control" value="#{pessoaMB.celular}"></h:inputText>
+						<p></p>
+						<h:outputLabel class="control-label" value="Nome do Pai:  " />
+						<h:inputText class="form-control" value="#{pessoaMB.pai}"></h:inputText>
+						<h:outputLabel class="control-label" value="Nome da Mãe  " />
+						<h:inputText class="form-control" value="#{pessoaMB.mae}"></h:inputText>
+						<p></p>
+						<h:outputLabel class="control-label" value="Tipo de usuário: " />
+						<h:selectOneMenu class="form-control classeCbTipo" id="cbTipo"
+							value="#{pessoaMB.tipoPessoa}">
+							<f:selectItem id="selecione" class="tipo" itemValue="0"
+								itemLabel="Selecione" />
+							<f:selectItem id="ItemAluno" class="tipo" itemValue="aluno"
+								itemLabel="Aluno" />
+							<f:selectItem id="ItemProfessor" class="tipo"
+								itemValue="professor" itemLabel="Professor" />
+							<f:selectItem id="ItemFuncionario" class="tipo"
+								itemValue="funcionario" itemLabel="Funcionario" />
+						</h:selectOneMenu>
+
+						<p></p>
+
+						<div class="divtipos" id="aluno">
+							<h:outputLabel class="control-label"
+								value="Forma de Pagamento:  " />
+							<h:inputText class="form-control"
+								value="#{pessoaMB.formaPagamento}"></h:inputText>
+						</div>
+						<p></p>
+						<div class="divtipos" id="funcionario">
+							<h:outputLabel class="control-label" value="Cargo " />
+							<h:inputText class="form-control" value="#{pessoaMB.cargo}"></h:inputText>
+							<h:outputLabel class="control-label" value="Data de Admissão: " />
+							<h:inputText class="form-control"
+								value="#{pessoaMB.dataAdmissao}">
+							</h:inputText>
+						</div>
+						<p></p>
+						<div class="divtipos" id="professor">
+							<h:outputLabel class="control-label" value="Formação: " />
+							<h:inputText class="form-control" value="#{pessoaMB.formacao}"></h:inputText>
+						</div>
+						<p></p>
+
+						<div class="divtipos" id="horario">
+							<h:outputLabel class="control-label" value="Horários: " />
+							<h:selectManyListbox class="form-control"
+								value="#{pessoaMB.horarioList}"
+								converter="javax.faces.Integer">
+								<f:selectItems 
+									value="#{horarioMB.horarioList}" var="horario"
+									itemValue="#{horario.idHorario}"
+									itemLabel="#{horario.dia} / #{horario.turno}" />
+							</h:selectManyListbox>
+						</div>
+						<p></p>
+						<h:commandButton class="btn btn-success botao"
+							action="#{pessoaMB.gravar}" value="Gravar" id="btnCadastrar" />
+						<h:commandButton class="btn btn-danger botao " action="agenda"
+							value="Cancelar" />
+						<br /> <br />
+						<p></p>
+						<h:outputLabel value="#{pessoaMB.msgAviso}" />
+						<h:messages id="msgErro" style="color: red"></h:messages>
+					</div>
+				</div>
+
+			</h:form>
+		</div>
+	</div>
 </h:body>
 </html>
 

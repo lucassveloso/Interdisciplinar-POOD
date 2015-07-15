@@ -25,6 +25,23 @@ public class Pessoa {
 		this.idReligiao = idReligiao;
 		this.idSexo = idSexo;
 	}
+	
+	public Pessoa(int cep, String nome, String nomeSocial,
+			String logradouro, String tipoPessoa, int idEtinia, int idReligiao,
+			int idSexo) {
+		this.cep = cep;
+		this.nome = nome;
+		this.nomeSocial = nomeSocial;
+		this.logradouro = logradouro;
+		this.tipoPessoa = tipoPessoa;
+		this.idEtinia = idEtinia;
+		this.idReligiao = idReligiao;
+		this.idSexo = idSexo;
+	}
+	
+	public Pessoa(){
+		
+	}
 
 	public int getIdPessoa() {
 		return idPessoa;

@@ -3,27 +3,23 @@ package br.edu.qi.dto;
 public class Filiacao {
 
 	private int idFiliacao;
-	private String descricao;
+	private String nome;
 	private int idTipo;
 	private int idFiliado;
 
-	private int idFiliado2;
-
-	public Filiacao(int idFiliacao, String descricao, int idTipo,
-			int idFiliado, int idFiliado2) {
+	public Filiacao(int idFiliacao, String nome, int idTipo,
+			int idFiliado ){
 		this.idFiliacao = idFiliacao;
-		this.descricao = descricao;
+		this.nome = nome;
 		this.idTipo = idTipo;
 		this.idFiliado = idFiliado;
-		this.idFiliado2 = idFiliado2;
 	}
 	
-	public Filiacao(String descricao, int idTipo,
-			int idFiliado, int idFiliado2) {
-		this.descricao = descricao;
+	public Filiacao(String nome, int idTipo,
+			int idFiliado) {
+		this.nome = nome;
 		this.idTipo = idTipo;
-		this.idFiliado = idFiliado;
-		this.idFiliado2 = idFiliado2;
+		this.idFiliado = idFiliado;;
 	}
 
 	public int getIdFiliacao() {
@@ -34,12 +30,12 @@ public class Filiacao {
 		this.idFiliacao = idFiliacao;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public int getIdTipo() {
@@ -58,12 +54,5 @@ public class Filiacao {
 		this.idFiliado = idFiliado;
 	}
 
-	public int getIdFiliado2() {
-		return idFiliado2;
-	}
-
-	public void setIdFiliado2(int idFiliado2) {
-		this.idFiliado2 = idFiliado2;
-	}
 
 }

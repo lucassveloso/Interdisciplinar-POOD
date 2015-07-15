@@ -28,29 +28,36 @@
 			document.forms["formCreate"].submit();
 		});
 		
-		function selecionaTipo(){
+
 			
-			var combo = document.getElementById("cbTipo");
-			if(combo.options[combo.selectedIndex].value == "aluno"){
-				$("#professor").removeClass("visible").addClass("hidden");
-				$("#funcionario").removeClass("visible").addClass("hidden");
-				$("#aluno").removeClass("hidden").addClass("visible");
-			}else if(combo.options[combo.selectedIndex].value == "funcionario"){
-				$("#professor").removeClass("visible").addClass("hidden");
-				$("#funcionario").removeClass("hidden").addClass("visible");
-				$("#aluno").removeClass("visible").addClass("hidden");
-			}else if(combo.options[combo.selectedIndex].value == "professor"){
-				$("#professor").removeClass("hidden").addClass("visible");
-				$("#funcionario").removeClass("visible").addClass("hidden");
-				$("#aluno").removeClass("visible").addClass("hidden");
-			}else{
-				$("#professor").removeClass("visible").addClass("hidden");
-				$("#funcionario").removeClass("visible").addClass("hidden");
-				$("#aluno").removeClass("visible").addClass("hidden");
-			}
-			
-		}
-			
+		$(function(){
+			  $(".classeCbTipo").change(function(e){
+			   var tipo = $(this).val();
+			   if(tipo == "aluno"){
+					$("#professor").removeClass("visible").addClass("hidden");
+					$("#funcionario").removeClass("visible").addClass("hidden");
+					$("#aluno").removeClass("hidden").addClass("visible");
+					$("#horario").removeClass("hidden").addClass("visible");
+				}else if(tipo == "funcionario"){
+					$("#professor").removeClass("visible").addClass("hidden");
+					$("#funcionario").removeClass("hidden").addClass("visible");
+					$("#aluno").removeClass("visible").addClass("hidden");
+					$("#horario").removeClass("visible").addClass("hidden");
+				}else if(tipo == "professor"){
+					$("#professor").removeClass("hidden").addClass("visible");
+					$("#funcionario").removeClass("visible").addClass("hidden");
+					$("#aluno").removeClass("visible").addClass("hidden");
+
+					$("#horario").removeClass("hidden").addClass("visible");
+				}else{
+					$("#professor").removeClass("visible").addClass("hidden");
+					$("#funcionario").removeClass("visible").addClass("hidden");
+					$("#aluno").removeClass("visible").addClass("hidden");
+					$("#horario").removeClass("visible").addClass("hidden");
+				}
+			  });
+			 });
+		
 		 $(document).ready(function(){
 		        $('.divtipos').addClass("hidden");
 		    });

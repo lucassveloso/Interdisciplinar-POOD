@@ -1,15 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      >
- 
-    <h:body> 
-    <h:form>
-    	<h1>Accesso Negado!</h1>
-		<h:commandButton action="login?faces-redirect=true" value="Logar" /> 
-       </h:form></h:body>
- 
- 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:event listener="#{usuarioMB.isLogado}" type="preRenderView" />
+<h:head>
+	<title>Acesso Negado</title>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/pessoas.css" />
+
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/pessoas.js"></script>
+
+</h:head>
+
+<h:body>
+	<h:form>
+		<div class="titulo-pagina">
+			<h1>Acesso Negado!!</h1>
+		</div>
+			<div>
+				<h:commandButton class="btn btn-success botao-centro"
+					action="login?faces-redirect=true" value="Logar" />
+			</div>
+		
+	</h:form>
+</h:body>
+
+
 </html>

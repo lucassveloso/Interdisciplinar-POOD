@@ -123,13 +123,11 @@ Descricao Varchar(15)
 
 CREATE TABLE Filiacao (
 Id_filiacao Int PRIMARY KEY auto_increment,
-Descricao Varchar(15),
+nome Varchar(15),
 Id_tipo Int,
 Id_filiado Int,
-Id_filiado2 Int,
 FOREIGN KEY(Id_tipo) REFERENCES Tipo_filiacao (Id_tipo),
-FOREIGN KEY(Id_filiado) REFERENCES Pessoas (Id_pessoa),
-FOREIGN KEY(Id_filiado2) REFERENCES Pessoas (Id_pessoa)
+FOREIGN KEY(Id_filiado) REFERENCES Pessoas (Id_pessoa)
 );
 
 

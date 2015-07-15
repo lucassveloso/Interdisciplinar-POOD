@@ -18,8 +18,19 @@ public class PessoaBean  {
 		try
 		{
 			PessoaDao dao = new PessoaDao();
-			
 			return dao.find(obj);
+		}catch(Exception ex)
+		{
+			throw new Exception("Erro ao procurar: "+ex.getMessage());
+		}
+	}
+	
+	public Pessoa findSemId(Pessoa obj) throws Exception
+	{
+		try
+		{
+			PessoaDao dao = new PessoaDao();
+			return dao.findSemId(obj);
 		}catch(Exception ex)
 		{
 			throw new Exception("Erro ao procurar: "+ex.getMessage());

@@ -11,6 +11,11 @@ public class Deficiencia {
 		this.descricao = descricao;
 		this.grau = grau;
 	}
+	
+	public Deficiencia(String descricao, int grau) {
+		this.descricao = descricao;
+		this.grau = grau;
+	}
 
 	public int getIdDeficiencia() {
 		return idDeficiencia;

@@ -7,3 +7,57 @@ visibility: hidden;
   display: block;
 visibility: visible;
 }
+
+.titulo-pagina{
+	padding-top: 80px;
+	width: 800px;
+	height: 150px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.bloco-cadastro{
+  width: 800px;
+  height: 800px;
+  margin: auto;
+  padding-top: 30px;
+}
+
+label {
+    font-weight: bold !important;
+}
+
+.direita{
+	float:right;
+	
+}
+
+.esquerda{
+	float:left;
+	
+}
+
+.centro{
+	margin-left:30%;
+	
+}
+
+.botao{
+	margin:5px;
+	margin-top: 80px;
+	float:right;
+}
+
+.botao-centro{
+	margin:5px;
+	margin-top: 80px;
+	margin-left:48%;
+}
+.logo{
+  width: 70px;
+  height: 70px;
+}
+
+.menu{
+	margin-top: 10px;	
+}
