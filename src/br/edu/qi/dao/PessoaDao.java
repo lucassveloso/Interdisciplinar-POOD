@@ -5,20 +5,17 @@ import java.util.ArrayList;
 
 import br.edu.qi.dto.Pessoa;
 
-public class PessoaDao extends GenericDao implements IDao<Pessoa> {
+public class PessoaDao extends GenericDao{
 
 	private static final String INSERT = "insert into "
 			+ "pessoas(CEP,Logradouro,Nome_social,Nome,Tipo_Pessoa,Id_etnia,Id_religiao,Id_sexo) values(?,?,?,?,?,?,?,?)";
 
 	private static final String SELECT = "select * from "
 			+ "pessoas where Id_pessoa=?";
-
-	private static final String SELECTSEMID = "select * from "
-			+ "pessoas where nome=? and cep=? and Logradouro=?";
 	
 	private static final String FINDALL = "select * from pessoas";
 
-	public void save(Pessoa obj) throws Exception {
+	public Pessoa save(Pessoa obj) throws Exception {
 		executeSQL(INSERT,
 				obj.getCep(),
 				obj.getLogradouro(),
@@ -28,6 +25,9 @@ public class PessoaDao extends GenericDao implements IDao<Pessoa> {
 				obj.getIdEtinia(),
 				obj.getIdReligiao(),
 				obj.getIdSexo());
+		
+		ArrayList<Pessoa> pessoas = findAll();
+		return pessoas.get(pessoas.size()-1);
 	}
 
 	public Pessoa find(Pessoa obj) throws Exception {
@@ -52,10 +52,10 @@ public class PessoaDao extends GenericDao implements IDao<Pessoa> {
 		return l;
 	}
 	
-	public Pessoa findSemId(Pessoa obj) throws Exception {
+	public Pessoa find(int id) throws Exception {
 		Pessoa l = null;
 		try {
-			ResultSet rs = executeQuery(SELECTSEMID, obj.getNome(),obj.getCep(),obj.getLogradouro());
+			ResultSet rs = executeQuery(SELECT, id);
 			if (rs.next()) {
 				return l = new Pessoa(
 						rs.getInt("Id_pessoa"),
@@ -86,7 +86,7 @@ public class PessoaDao extends GenericDao implements IDao<Pessoa> {
 						rs.getString("nome_social"),
 						rs.getString("nome"),
 						rs.getString("Tipo_Pessoa"),
-						rs.getInt("Id_etinia"),
+						rs.getInt("Id_etnia"),
 						rs.getInt("Id_religiao"),
 						rs.getInt("Id_sexo")));
 			}

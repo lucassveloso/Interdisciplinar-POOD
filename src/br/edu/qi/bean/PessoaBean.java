@@ -25,12 +25,12 @@ public class PessoaBean  {
 		}
 	}
 	
-	public Pessoa findSemId(Pessoa obj) throws Exception
+	public Pessoa find(int id) throws Exception
 	{
 		try
 		{
 			PessoaDao dao = new PessoaDao();
-			return dao.findSemId(obj);
+			return dao.find(id);
 		}catch(Exception ex)
 		{
 			throw new Exception("Erro ao procurar: "+ex.getMessage());
@@ -50,13 +50,13 @@ public class PessoaBean  {
 		}
 	}
 	
-	public void save(Pessoa obj) throws Exception
+	public Pessoa save(Pessoa obj) throws Exception
 	{
 		try
 		{
 			PessoaDao dao = new PessoaDao();
 			
-			dao.save(obj);
+			return dao.save(obj);
 		}catch(Exception ex)
 		{
 			throw new Exception("Erro ao salvar: "+ex.getMessage());

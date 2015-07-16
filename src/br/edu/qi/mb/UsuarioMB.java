@@ -30,7 +30,7 @@ public class UsuarioMB {
 	UsuarioBean ejb;
 	@EJB
 	PessoaBean ejbpessoa;
-	
+
 	public String login;
 	public String senha;
 	public String idPessoa;
@@ -48,57 +48,29 @@ public class UsuarioMB {
 		}
 	}
 
-
-
-	
-
 	public String getLogin() {
 		return login;
 	}
-
-
-
-
 
 	public void setLogin(String login) {
 		this.login = login;
 	}
 
-
-
-
-
 	public String getSenha() {
 		return senha;
 	}
-
-
-
-
 
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
-
-
-
-
 	public String getIdPessoa() {
 		return idPessoa;
 	}
 
-
-
-
-
 	public void setIdPessoa(String idPessoa) {
 		this.idPessoa = idPessoa;
 	}
-
-
-
-
 
 	public String getMsgAviso() {
 		return msgAviso;
@@ -111,35 +83,16 @@ public class UsuarioMB {
 	private void setMessage(String objErro, String msg) {
 		FacesMessage message = new FacesMessage(msg);
 		FacesContext.getCurrentInstance().addMessage(objErro, message);
-}
+	}
 
 	private void validation() throws Exception {
-		Numeric n = new Numeric();
 		if (this.login.trim().length() == 0)
-			throw new Exception("Informe a Descricao");
+			throw new Exception("Informe o Login");
 
 		if (this.senha.trim().length() == 0)
-			throw new Exception("Informe o Grau");
+			throw new Exception("Informe a Senha");
 	}
 
-	public void gravar() {
-		try {
-			this.setMsgAviso("");
-			this.validation();
-
-			Usuario dto = new Usuario(
-					this.login,this.senha,
-					Integer.parseInt(this.idPessoa));
-			ejb.save(dto);
-
-			this.setMsgAviso("Gravação com sucesso");
-
-		} catch (Exception ex) {
-			this.setMsgAviso("");
-			setMessage("msgErro", ex.getMessage());
-		}
-	}
-	
 	public void entrar() {
 		try {
 			this.setMsgAviso("");
@@ -153,45 +106,39 @@ public class UsuarioMB {
 				HttpSession session = (HttpSession) FacesContext
 						.getCurrentInstance().getExternalContext()
 						.getSession(false);
-				
+
 				session.setAttribute("Usuario", dto);
 
 				FacesContext.getCurrentInstance().getExternalContext()
-				.redirect("index.xhtml");
+						.redirect("index.xhtml");
 			}
 		} catch (Exception ex) {
 			this.setMsgAviso("");
 			setMessage("msgErro", ex.getMessage());
 		}
 	}
-	
-public void isLogado(ComponentSystemEvent event){
-		
-		HttpSession session = (HttpSession) FacesContext
-				.getCurrentInstance().getExternalContext()
-				.getSession(false);
-		Object dto = session.getAttribute("Usuario");		 
+
+	public void isLogado(ComponentSystemEvent event) {
+
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		Object dto = session.getAttribute("Usuario");
 		FacesContext fc = FacesContext.getCurrentInstance();
-	
-		if (dto==null){	 
-			ConfigurableNavigationHandler nav 
-			   = (ConfigurableNavigationHandler) 
-				fc.getApplication().getNavigationHandler();
-	 
+
+		if (dto == null) {
+			ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc
+					.getApplication().getNavigationHandler();
+
 			nav.performNavigation("access-denied");
-		}		
-	  }	
+		}
+	}
 
-public String getTipoPessoa() throws Exception{
-	HttpSession session = (HttpSession) FacesContext
-			.getCurrentInstance().getExternalContext()
-			.getSession(false);
-	Usuario dto = (Usuario) session.getAttribute("Usuario");	
-	Pessoa p = new Pessoa();
-	p.setIdPessoa(dto.getIdPessoa());
-	p = ejbpessoa.find(p);
-
-	return p.getTipoPessoa();
-  }	
+	public String getTipoPessoa() throws Exception {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		Usuario dto = (Usuario) session.getAttribute("Usuario");
+		Pessoa p = ejbpessoa.find(dto.getIdPessoa());
+		return p.getTipoPessoa();
+	}
 
 }

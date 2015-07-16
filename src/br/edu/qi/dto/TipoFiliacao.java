@@ -2,21 +2,21 @@ package br.edu.qi.dto;
 
 public class TipoFiliacao {
 
-	private int idFiliacao;
+	private int idTipo;
 	private String descricao;
 
-	public TipoFiliacao(int idFiliacao, String descricao) {
+	public TipoFiliacao(int idTipo, String descricao) {
 		super();
-		this.idFiliacao = idFiliacao;
+		this.idTipo = idTipo;
 		this.descricao = descricao;
 	}
 
-	public int getIdFiliacao() {
-		return idFiliacao;
+	public int getidTipo() {
+		return idTipo;
 	}
 
-	public void setIdFiliacao(int idFiliacao) {
-		this.idFiliacao = idFiliacao;
+	public void setidTipo(int idTipo) {
+		this.idTipo = idTipo;
 	}
 
 	public String getDescricao() {

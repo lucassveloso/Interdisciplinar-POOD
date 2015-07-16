@@ -19,6 +19,7 @@ import br.edu.qi.bean.HorarioPessoaBean;
 import br.edu.qi.bean.PessoaBean;
 import br.edu.qi.bean.ProfessorBean;
 import br.edu.qi.bean.TelefoneBean;
+import br.edu.qi.bean.UsuarioBean;
 import br.edu.qi.dto.Aluno;
 import br.edu.qi.dto.DeficPessoa;
 import br.edu.qi.dto.Filiacao;
@@ -27,6 +28,7 @@ import br.edu.qi.dto.HorarioPessoa;
 import br.edu.qi.dto.Pessoa;
 import br.edu.qi.dto.Professor;
 import br.edu.qi.dto.Telefone;
+import br.edu.qi.dto.Usuario;
 import br.edu.qi.util.Numeric;
 
 @ManagedBean
@@ -50,6 +52,8 @@ public class PessoaMB {
 	FuncionarioBean ejbFuncionario;
 	@EJB
 	HorarioPessoaBean ejbHorarioPessoa;
+	@EJB
+	UsuarioBean ejbUsuario;
 	
 	
 	public String cep;
@@ -63,12 +67,17 @@ public class PessoaMB {
 	public String tipoPessoa;
 	public String telefone;
 	public String celular;
-	public String pai;
-	public String mae;
+	public String nomeFiliacao1;
+	public String nomeFiliacao2;
 	public String formaPagamento;
 	public String cargo;
 	public String formacao;
 	public String dataAdmissao;
+	public String idTipoFiliacao1;
+	public String idTipoFiliacao2;
+	public String login;
+	public String senha;
+	public String confirmarSenha;
 
 	public ArrayList<Pessoa> pessoaList;
 	public Integer[] deficienciaList;
@@ -165,20 +174,36 @@ public class PessoaMB {
 		this.celular = celular;
 	}
 
-	public String getPai() {
-		return pai;
+	public String getnomeFiliacao1() {
+		return nomeFiliacao1;
 	}
 
-	public void setPai(String pai) {
-		this.pai = pai;
+	public void setnomeFiliacao1(String nomeFiliacao1) {
+		this.nomeFiliacao1 = nomeFiliacao1;
 	}
 
-	public String getMae() {
-		return mae;
+	public String getnomeFiliacao2() {
+		return nomeFiliacao2;
 	}
 
-	public void setMae(String mae) {
-		this.mae = mae;
+	public void setnomeFiliacao2(String nomeFiliacao2) {
+		this.nomeFiliacao2 = nomeFiliacao2;
+	}
+
+	public String getIdTipoFiliacao1() {
+		return idTipoFiliacao1;
+	}
+
+	public void setIdTipoFiliacao1(String idTipoFiliacao1) {
+		this.idTipoFiliacao1 = idTipoFiliacao1;
+	}
+
+	public String getIdTipoFiliacao2() {
+		return idTipoFiliacao2;
+	}
+
+	public void setIdTipoFiliacao2(String idTipoFiliacao2) {
+		this.idTipoFiliacao2 = idTipoFiliacao2;
 	}
 
 	public String getFormaPagamento() {
@@ -213,6 +238,30 @@ public class PessoaMB {
 		this.dataAdmissao = dataAdmissao;
 	}
 	
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getConfirmarSenha() {
+		return confirmarSenha;
+	}
+
+	public void setConfirmarSenha(String confirmarSenha) {
+		this.confirmarSenha = confirmarSenha;
+	}
+	
 	
 
 	public Integer[] getHorarioList() {
@@ -245,79 +294,97 @@ public class PessoaMB {
 	public void setDeficienciaList(Integer[] deficienciaList) {
 		this.deficienciaList = deficienciaList;
 	}
+	
+	
+
+	public String getNomeFiliacao1() {
+		return nomeFiliacao1;
+	}
+
+	public void setNomeFiliacao1(String nomeFiliacao1) {
+		this.nomeFiliacao1 = nomeFiliacao1;
+	}
+
+	public String getNomeFiliacao2() {
+		return nomeFiliacao2;
+	}
+
+	public void setNomeFiliacao2(String nomeFiliacao2) {
+		this.nomeFiliacao2 = nomeFiliacao2;
+	}
 
 	private void validation() throws Exception {
-		Numeric n = new Numeric();
 		if (this.nome.trim().length() == 0)
 			throw new Exception("Informe o Nome");
 
 		if (this.nomeSocial.trim().length() == 0)
 			throw new Exception("Informe o Nome Social");
 
-		if (this.idSexo.trim().length() == 0)
-			throw new Exception("Informe o idSexo");
-
-		if (!n.isNumeric(this.idSexo))
-			throw new Exception("idSexo apenas numero");
-
 		if (this.cep.trim().length() == 0)
 			throw new Exception("Informe o CEP");
 
-		if (!n.isNumeric(this.cep))
+		if (!Numeric.isNumeric(this.cep))
 			throw new Exception("CEP apenas numero");
 
 		if (this.logradouro.trim().length() == 0)
 			throw new Exception("Informe o Logradouro");
+		
+		if (this.telefone.trim().length() == 0)
+			throw new Exception("Informe o Telefone");
+		
+		if (this.celular.trim().length() == 0)
+			throw new Exception("Informe o Celular");
+		
+		if (this.nomeFiliacao1.trim().length() == 0)
+			throw new Exception("Informe o Nome do primeiro parente");
+		
+		if (this.nomeFiliacao2.trim().length() == 0)
+			throw new Exception("Informe o Nome do segundo parente");
+		
+		if (this.login.trim().length() == 0)
+			throw new Exception("Informe o Login");
 
-		if (this.idEtnia.trim().length() == 0)
-			throw new Exception("Informe o IdEtnia");
-
-		if (!n.isNumeric(this.idEtnia))
-			throw new Exception("IdEtnia apenas numero");
-
-		if (this.idReligiao.trim().length() == 0)
-			throw new Exception("Informe o idReligiao");
-
-		if (!n.isNumeric(this.idReligiao))
-			throw new Exception("idReligiao apenas numero");
+		if (this.senha.trim().length() == 0)
+			throw new Exception("Informe a Senha");
+		
+		if (!this.senha.equals(this.confirmarSenha))
+			throw new Exception("A senha e sua confirmação são diferentes");
 
 	}
 
 	public void gravar() {
 		try {
 			this.setMsgAviso("");
-			// this.validation();
-
+			this.validation();
+			
 			Pessoa dto = new Pessoa(Integer.parseInt(this.cep), this.nome,
 					this.nomeSocial, this.logradouro, this.tipoPessoa,
 					Integer.parseInt(this.idEtnia),
 					Integer.parseInt(this.idReligiao),
 					Integer.parseInt(this.idSexo));
-			ejb.save(dto);
-
-			Pessoa pessoa = ejb.findSemId(dto);
+			dto = ejb.save(dto);
 
 			for (int i = 0; i< deficienciaList.length;i++) {
-				DeficPessoa deficPessoa = new DeficPessoa(pessoa.getIdPessoa(),
+				DeficPessoa deficPessoa = new DeficPessoa(dto.getIdPessoa(),
 						deficienciaList[i]);
 				ejbDeficPessoa.save(deficPessoa);
 			}
 			
 
-			Telefone telefone = new Telefone(pessoa.getIdPessoa(), this.telefone);
-			Telefone celular = new Telefone(pessoa.getIdPessoa(), this.celular);
+			Telefone telefone = new Telefone(dto.getIdPessoa(), this.telefone);
+			Telefone celular = new Telefone(dto.getIdPessoa(), this.celular);
 
 			ejbTelefone.save(telefone);
 			ejbTelefone.save(celular);
 
-			Filiacao pai = new Filiacao(this.pai, 1, pessoa.getIdPessoa());
-			Filiacao mae = new Filiacao(this.mae, 2, pessoa.getIdPessoa());
+			Filiacao filiacao1 = new Filiacao(this.nomeFiliacao1, Integer.parseInt(this.idTipoFiliacao1), dto.getIdPessoa());
+			Filiacao filiacao2 = new Filiacao(this.nomeFiliacao2, Integer.parseInt(this.idTipoFiliacao2), dto.getIdPessoa());
 
-			ejbFiliacao.save(pai);
-			ejbFiliacao.save(mae);
+			ejbFiliacao.save(filiacao1);
+			ejbFiliacao.save(filiacao2);
 
 			if(tipoPessoa.equals("aluno")){
-				Aluno aluno = new Aluno(pessoa.getIdPessoa(),this.getFormaPagamento());
+				Aluno aluno = new Aluno(dto.getIdPessoa(),this.getFormaPagamento());
 				ejbAluno.save(aluno);
 			}else if(tipoPessoa.equals("funcionario")){
 				Date data = null;
@@ -328,21 +395,24 @@ public class PessoaMB {
 		        } catch (Exception ex) {  
 		            ex.printStackTrace();  
 		        }  
-				Funcionario funcionario = new Funcionario(pessoa.getIdPessoa(),data,this.getCargo());
+				Funcionario funcionario = new Funcionario(dto.getIdPessoa(),data,this.getCargo());
 				ejbFuncionario.save(funcionario);
 			}else if(tipoPessoa.equals("professor")){
-				Professor professor = new Professor(pessoa.getIdPessoa(),this.getFormacao());
+				Professor professor = new Professor(dto.getIdPessoa(),this.getFormacao());
 				ejbProfessor.save(professor);
 			}
 			
 			
 			if(tipoPessoa.equals("professor") || tipoPessoa.equals("aluno")){
 				for (int i = 0; i< horarioList.length;i++) {
-					HorarioPessoa horarioPessoa = new HorarioPessoa(pessoa.getIdPessoa(),
+					HorarioPessoa horarioPessoa = new HorarioPessoa(dto.getIdPessoa(),
 							horarioList[i]);
 					ejbHorarioPessoa.save(horarioPessoa);
 				}
 			}
+			
+			
+			ejbUsuario.save(new Usuario(this.login, this.senha,dto.getIdPessoa()));
 			
 			this.setMsgAviso("Gravação com sucesso");
 

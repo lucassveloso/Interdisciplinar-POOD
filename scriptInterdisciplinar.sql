@@ -229,6 +229,8 @@ insert into Religiao values(6,'Sikhismo');
 insert into Religiao values(7,'Judaísmo');
 insert into Religiao values(8,'Espiritismo');
 insert into Religiao values(9,'Wicca');
+insert into Religiao values(10,'Ateu');
+insert into Religiao values(11,'Agn�stico');
 
 insert into Horarios values(1,'Segunda','Manhã');
 insert into Horarios values(2,'Segunda','Tarde');
