@@ -229,7 +229,7 @@ insert into Religiao values(7,'Judaísmo');
 insert into Religiao values(8,'Espiritismo');
 insert into Religiao values(9,'Wicca');
 insert into Religiao values(10,'Ateu');
-insert into Religiao values(11,'Agn�stico');
+insert into Religiao values(11,'Agnóstico');
 
 insert into Horarios values(1,'Segunda','Manhã');
 insert into Horarios values(2,'Segunda','Tarde');
@@ -252,3 +252,6 @@ insert into Tipo_filiacao values(2,'Mãe');
 
 insert into Cursos values(1,'ADS');
 insert into Cursos values(2,'Administração');
+
+insert into Pessoas values(1,9999999,'Local','Admin','Admin','funcionario',1,1,1);
+insert into Usuarios values("adm","adm123",1);
