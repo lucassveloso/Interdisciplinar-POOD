@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<f:event listener="#{usuarioMB.isLogado}" type="preRenderView" />
+<h:head>
+
+	<title>Vendas de Produtos</title>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/pessoas.css" />
+
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/pessoas.js"></script>
+
+</h:head>
+
+<h:body>
+<h:form>
+	<p:menubar autoDisplay="false">
+		<p:submenu rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" label="Usuários">
+			<p:menuitem value="Cadastrar Usuários"
+				url="#{request.pathInfo}/view/usuarios.xhtml" />
+			<p:menuitem value="Cadastrar Deficiencias"
+				url="#{request.pathInfo}/view/deficiencias.xhtml" />
+		</p:submenu>
+		<p:submenu label="Turmas">
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}" value="Cadastrar turmas"
+				url="#"></p:menuitem>
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}" value="Matrícula"
+				url="#"></p:menuitem>
+		</p:submenu>
+		<p:submenu label="Loja">
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" value="Cadastrar Itens"
+				url="#{request.pathInfo}/view/itens.xhtml"></p:menuitem>
+			<p:menuitem value="Vendas"
+				url="#{request.pathInfo}/view/vendas.xhtml"></p:menuitem>
+		</p:submenu>
+		<f:facet name="options">
+			<p:commandButton action="#{usuarioMB.logout}" type="button" value="Logout" icon="ui-icon-extlink" />
+		</f:facet>
+	</p:menubar>
+	</h:form>
+
+	<div class="titulo-pagina">
+		<h1>Vendas de Produtos</h1>
+	</div>
+	<div class="container-fluid">
+		<div class="bloco-cadastro">
+			<h:form name="formulario">
+				<div class="form-group">
+					<div class="col-xs-6 col-md-6 esquerda">
+
+						<h:outputLabel class="control-label" value="Comprador: " />
+						<h:selectOneMenu class="form-control classeCbTipo" id="cbTipo"
+							value="#{itemMB.tipoItem}">
+							<f:selectItem id="selecione" class="tipo" itemLabel="Selecione" />
+							<f:selectItem id="CompradorAluno" class="tipo" itemValue="aluno"
+								itemLabel="Aluno" />
+							<f:selectItem id="CompradorFuncionario" class="tipo"
+								itemValue="professor" itemLabel="Professor" />
+							<f:selectItem id="CompradorProfessor" class="tipo"
+								itemValue="funcionario" itemLabel="Funcionário" />
+						</h:selectOneMenu>
+						<p></p>
+						<div class="divtipos" id="aluno">
+							<h:selectOneMenu class="form-control" value="#{pessoaMB.nome}">
+								<f:selectItems value="#{pessoaMB.pessoaListAluno}" var="pessoa"
+									itemValue="#{pessoa.idPessoa}" itemLabel="#{pessoa.nome}" />
+							</h:selectOneMenu>
+							<p></p>
+						</div>
+						<div class="divtipos" id="funcionario">
+							<h:selectOneMenu class="form-control" value="#{pessoaMB.nome}">
+								<f:selectItems value="#{pessoaMB.pessoaListFuncionario}"
+									var="pessoa" itemValue="#{pessoa.idPessoa}"
+									itemLabel="#{pessoa.nome}" />
+							</h:selectOneMenu>
+							<p></p>
+						</div>
+						<div class="divtipos" id="professor">
+							<h:selectOneMenu class="form-control" value="#{pessoaMB.nome}">
+								<f:selectItems value="#{pessoaMB.pessoaListProfessor}"
+									var="pessoa" itemValue="#{pessoa.idPessoa}"
+									itemLabel="#{pessoa.nome}" />
+							</h:selectOneMenu>
+							<p></p>
+						</div>
+						<h:form>
+							<h:outputLabel class="control-label"
+								value="Selecione os Produtos: " />
+							<h:selectOneListbox class="form-control" id="subscriptions"
+								value="#{vendaMB.idItemComprado}"
+								converter="javax.faces.Integer">
+								<f:selectItems class="item" value="#{itemMB.itemProdutosList}"
+									var="item" itemValue="#{item.idItem}"
+									itemLabel="Nome: #{item.descricao} / Valor: #{item.valor}" />
+							</h:selectOneListbox>
+							<p></p>
+							<h:outputLabel class="control-label" value="Quantidade: " />
+							<h:inputText class="form-control" value="#{vendaMB.quantidade}"></h:inputText>
+							<h:commandButton class="btn btn-success"
+								action="#{vendaMB.addItemComprado}" value="Enviar" />
+						</h:form>
+
+					</div>
+					<div class="col-xs-6 col-md-6 direita">
+						<h:outputLabel class="control-label" value="Produtos Comprados: " />
+						<h:selectOneListbox class="form-control" id="subscription">
+							<f:selectItems class="item" value="#{vendaMB.produtoList}"
+								var="produto" itemValue="#{produto.idItem}"
+								itemLabel="Nome: #{produto.local} / Quantidade: #{produto.quantidade}" />
+						</h:selectOneListbox>
+						<p></p>
+						<h:outputLabel class="control-label"
+							value="Valor Total da Compra:  " />
+						<h:inputText class="form-control" value="#{vendaMB.valorTotal}"></h:inputText>
+
+						<h:commandButton class="btn btn-success botao"
+							action="#{vendaMB.gravar}" value="Gravar" />
+						<h:commandButton class="btn btn-danger botao" action="index"
+							value="Cancelar" />
+						<br /> <br />
+						<p></p>
+						<h:outputText value="#{vendaMB.msgAviso}" />
+						<h:messages id="msgErro" style="color: red"></h:messages>
+
+					</div>
+
+				</div>
+
+
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>

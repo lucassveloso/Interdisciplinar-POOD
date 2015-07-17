@@ -35,6 +35,7 @@ public class UsuarioMB {
 	public String senha;
 	public String idPessoa;
 	public String msgAviso;
+	public String tipoPessoa;
 	public ArrayList<Usuario> usuarioList;
 
 	public ArrayList<Usuario> getusuarioList() {
@@ -133,6 +134,10 @@ public class UsuarioMB {
 		}
 	}
 
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
 	public String getTipoPessoa() throws Exception {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
@@ -140,5 +145,7 @@ public class UsuarioMB {
 		Pessoa p = ejbpessoa.find(dto.getIdPessoa());
 		return p.getTipoPessoa();
 	}
+
+
 
 }

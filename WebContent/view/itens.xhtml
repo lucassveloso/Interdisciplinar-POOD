@@ -9,7 +9,7 @@
 <f:event listener="#{usuarioMB.isLogado}" type="preRenderView" />
 <h:head>
 
-	<title>Cadastro de Deficiências</title>
+	<title>Cadastro de Itens</title>
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
 	<link rel="stylesheet"
@@ -20,7 +20,7 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script type="text/javascript"
 		src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="js/pessoas.js"></script>
+	<script type="text/javascript" src="js/item.js"></script>
 
 </h:head>
 
@@ -52,7 +52,7 @@
 	</h:form>
 
 	<div class="titulo-pagina">
-		<h1>Cadastro de Deficiêcias</h1>
+		<h1>Cadastro de Itens</h1>
 	</div>
 	<div class="container-fluid">
 		<div class="bloco-cadastro">
@@ -60,22 +60,56 @@
 			<h:form name="formulario">
 				<div class="form-group">
 					<div class="col-xs-6 col-md-5 centro">
-					<h:outputLabel class="control-label" value="Descrição: " />
-					<h:inputText class="form-control"
-						value="#{deficienciaMB.descricao}"></h:inputText>
-					<p></p>
-					<h:outputLabel class="control-label" value="Grau: " />
-					<h:inputText class="form-control" value="#{deficienciaMB.grau}"></h:inputText>
-					<p></p>
-					<h:commandButton class="btn btn-success botao"
-						action="#{deficienciaMB.gravar}" value="Gravar" />
-					<h:commandButton class="btn btn-danger botao" action="index"
-						value="Cancelar" />
-					<br /> <br />
-					<p></p>
-					<h:outputText value="#{deficienciaMB.msgAviso}" />
-					<h:messages id="msgErro" style="color: red"></h:messages>
-				</div>
+						<h:outputLabel class="control-label" value="Descrição: " />
+						<h:inputText class="form-control" value="#{itemMB.descricao}"></h:inputText>
+						<p></p>
+						<h:outputLabel class="control-label" value="Valor Unitário: " />
+						<h:inputText class="form-control" value="#{itemMB.valor}"></h:inputText>
+						<p></p>
+							<h:outputLabel class="control-label" value="Tipo de item: " />
+						<h:selectOneMenu class="form-control classeCbTipo" id="cbTipo"
+							value="#{itemMB.tipoItem}">
+							<f:selectItem id="selecione" class="tipo" itemLabel="Selecione" />
+							<f:selectItem id="ItemProduto" class="tipo" itemValue="produto"
+								itemLabel="Produto" />
+							<f:selectItem id="ItemServico" class="tipo"
+								itemValue="servico" itemLabel="Serviço" />
+						</h:selectOneMenu>
+						<p></p>
+						<div class="divtipos" id="produto">
+							<h:outputLabel class="control-label"
+								value="Quantidade (Em estoque):  " />
+							<h:inputText class="form-control"
+								value="#{itemMB.quantidade}"></h:inputText>
+							<p></p>
+							<h:outputLabel class="control-label"
+								value="Local:  " />
+							<h:inputText class="form-control"
+								value="#{itemMB.local}"></h:inputText>
+							<p></p>
+						</div>
+						<div class="divtipos" id="servico">
+							<h:outputLabel class="control-label"
+								value="Especificação:  " />
+							<h:inputText class="form-control"
+								value="#{itemMB.especificacao}"></h:inputText>
+							<p></p>
+							<h:outputLabel class="control-label"
+								value="Duração (horas)  " />
+							<h:inputText class="form-control"
+								value="#{itemMB.duracao}"></h:inputText>
+							<p></p>
+						</div>
+						
+						<h:commandButton class="btn btn-success botao"
+							action="#{itemMB.gravar}" value="Gravar" />
+						<h:commandButton class="btn btn-danger botao" action="index"
+							value="Cancelar" />
+						<br /> <br />
+						<p></p>
+						<h:outputText value="#{itemMB.msgAviso}" />
+						<h:messages id="msgErro" style="color: red"></h:messages>
+					</div>
 				</div>
 			</h:form>
 		</div>

@@ -5,7 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
+<f:event listener="#{usuarioMB.isLogado}" type="preRenderView" />
 <h:head>
 	<title>Planet Office</title>
 	<link rel="stylesheet"
@@ -25,38 +25,26 @@
 <h:body>
 <h:form>
 	<p:menubar autoDisplay="false">
-		<p:submenu label="Usuários">
+		<p:submenu rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" label="Usuários">
 			<p:menuitem value="Cadastrar Usuários"
-				url="#{request.pathInfo}/view/pessoas.xhtml" />
+				url="#{request.pathInfo}/view/usuarios.xhtml" />
 			<p:menuitem value="Cadastrar Deficiencias"
 				url="#{request.pathInfo}/view/deficiencias.xhtml" />
 		</p:submenu>
-		<p:submenu label="Tipos de Imóveis">
-			<p:menuitem value="Cadastrar tipo de imóvel"
-				url="#{request.pathInfo}/view/tipoimovel/cadastro.xhtml"></p:menuitem>
-			<p:menuitem value="Consultar tipos de imóveis"
-				url="#{request.pathInfo}/view/tipoimovel/consultar.xhtml"></p:menuitem>
+		<p:submenu label="Turmas">
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}" value="Cadastrar turmas"
+				url="#"></p:menuitem>
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}" value="Matrícula"
+				url="#"></p:menuitem>
 		</p:submenu>
-		<p:submenu label="Imóvel">
-			<p:menuitem value="Cadastrar imóveis"
-				url="#{request.pathInfo}/view/imovel/cadastro.xhtml"></p:menuitem>
-			<p:menuitem value="Consultar imóveis"
-				url="#{request.pathInfo}/view/imovel/consultar.xhtml"></p:menuitem>
-		</p:submenu>
-		<p:submenu label="Cliente">
-			<p:menuitem value="Cadastrar cliente"
-				url="#{request.pathInfo}/view/cliente/cadastro.xhtml"></p:menuitem>
-			<p:menuitem value="Consultar cliente"
-				url="#{request.pathInfo}/view/cliente/consultar.xhtml"></p:menuitem>
-		</p:submenu>
-		<p:submenu label="Proposta">
-			<p:menuitem value="Enviar Proposta"
-				url="#{request.pathInfo}/view/proposta/enviar.xhtml"></p:menuitem>
-			<p:menuitem value="Buscar Proposta"
-				url="#{request.pathInfo}/view/proposta/buscar.xhtml"></p:menuitem>
+		<p:submenu label="Loja">
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" value="Cadastrar Itens"
+				url="#{request.pathInfo}/view/itens.xhtml"></p:menuitem>
+			<p:menuitem value="Vendas"
+				url="#{request.pathInfo}/view/vendas.xhtml"></p:menuitem>
 		</p:submenu>
 		<f:facet name="options">
-			<p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+			<p:commandButton action="#{usuarioMB.logout}" type="button" value="Logout" icon="ui-icon-extlink" />
 		</f:facet>
 	</p:menubar>
 	</h:form>

@@ -79,7 +79,6 @@ FOREIGN KEY(Id_religiao) REFERENCES Religiao (Id_religiao)
 CREATE TABLE Vendas (
 Id_venda Int PRIMARY KEY auto_increment,
 Id_pessoa Int,
-Data Datetime,
 Valor_total Float,
 FOREIGN KEY(Id_pessoa) REFERENCES Pessoas (Id_pessoa)
 );

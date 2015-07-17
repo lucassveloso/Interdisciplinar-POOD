@@ -54,8 +54,7 @@ public class PessoaMB {
 	HorarioPessoaBean ejbHorarioPessoa;
 	@EJB
 	UsuarioBean ejbUsuario;
-	
-	
+
 	public String cep;
 	public String nome;
 	public String nomeSocial;
@@ -80,13 +79,49 @@ public class PessoaMB {
 	public String confirmarSenha;
 
 	public ArrayList<Pessoa> pessoaList;
+	public ArrayList<Pessoa> pessoaListAluno;
+	public ArrayList<Pessoa> pessoaListFuncionario;
+	public ArrayList<Pessoa> pessoaListProfessor;
 	public Integer[] deficienciaList;
 	public Integer[] horarioList;
 
 	public ArrayList<Pessoa> getPessoaList() {
 		try {
-			pessoaList = ejb.findAll();
+			pessoaList = ejb.findAll(null);
 			return pessoaList;
+		} catch (Exception e) {
+			this.setMsgAviso("");
+			setMessage("msgErro", e.getMessage());
+			return null;
+		}
+	}
+
+	public ArrayList<Pessoa> getPessoaListAluno() {
+		try {
+			pessoaListAluno = ejb.findAll("aluno");
+			return pessoaListAluno;
+		} catch (Exception e) {
+			this.setMsgAviso("");
+			setMessage("msgErro", e.getMessage());
+			return null;
+		}
+	}
+
+	public ArrayList<Pessoa> getPessoaListProfessor() {
+		try {
+			pessoaListProfessor = ejb.findAll("professor");
+			return pessoaListProfessor;
+		} catch (Exception e) {
+			this.setMsgAviso("");
+			setMessage("msgErro", e.getMessage());
+			return null;
+		}
+	}
+
+	public ArrayList<Pessoa> getPessoaListFuncionario() {
+		try {
+			pessoaListFuncionario = ejb.findAll("funcionario");
+			return pessoaListFuncionario;
 		} catch (Exception e) {
 			this.setMsgAviso("");
 			setMessage("msgErro", e.getMessage());
@@ -237,7 +272,7 @@ public class PessoaMB {
 	public void setDataAdmissao(String dataAdmissao) {
 		this.dataAdmissao = dataAdmissao;
 	}
-	
+
 	public String getLogin() {
 		return login;
 	}
@@ -261,8 +296,6 @@ public class PessoaMB {
 	public void setConfirmarSenha(String confirmarSenha) {
 		this.confirmarSenha = confirmarSenha;
 	}
-	
-	
 
 	public Integer[] getHorarioList() {
 		return horarioList;
@@ -285,8 +318,6 @@ public class PessoaMB {
 		FacesContext.getCurrentInstance().addMessage(objErro, message);
 	}
 
-	
-	
 	public Integer[] getDeficienciaList() {
 		return deficienciaList;
 	}
@@ -294,8 +325,6 @@ public class PessoaMB {
 	public void setDeficienciaList(Integer[] deficienciaList) {
 		this.deficienciaList = deficienciaList;
 	}
-	
-	
 
 	public String getNomeFiliacao1() {
 		return nomeFiliacao1;
@@ -328,25 +357,28 @@ public class PessoaMB {
 
 		if (this.logradouro.trim().length() == 0)
 			throw new Exception("Informe o Logradouro");
-		
+
 		if (this.telefone.trim().length() == 0)
 			throw new Exception("Informe o Telefone");
-		
+
 		if (this.celular.trim().length() == 0)
 			throw new Exception("Informe o Celular");
-		
+
 		if (this.nomeFiliacao1.trim().length() == 0)
 			throw new Exception("Informe o Nome do primeiro parente");
-		
+
 		if (this.nomeFiliacao2.trim().length() == 0)
 			throw new Exception("Informe o Nome do segundo parente");
-		
+
+		if (this.tipoPessoa == null)
+			throw new Exception("Por favor, selecione um tipo de Item");
+
 		if (this.login.trim().length() == 0)
 			throw new Exception("Informe o Login");
 
 		if (this.senha.trim().length() == 0)
 			throw new Exception("Informe a Senha");
-		
+
 		if (!this.senha.equals(this.confirmarSenha))
 			throw new Exception("A senha e sua confirmação são diferentes");
 
@@ -356,7 +388,7 @@ public class PessoaMB {
 		try {
 			this.setMsgAviso("");
 			this.validation();
-			
+
 			Pessoa dto = new Pessoa(Integer.parseInt(this.cep), this.nome,
 					this.nomeSocial, this.logradouro, this.tipoPessoa,
 					Integer.parseInt(this.idEtnia),
@@ -364,12 +396,11 @@ public class PessoaMB {
 					Integer.parseInt(this.idSexo));
 			dto = ejb.save(dto);
 
-			for (int i = 0; i< deficienciaList.length;i++) {
+			for (int i = 0; i < deficienciaList.length; i++) {
 				DeficPessoa deficPessoa = new DeficPessoa(dto.getIdPessoa(),
 						deficienciaList[i]);
 				ejbDeficPessoa.save(deficPessoa);
 			}
-			
 
 			Telefone telefone = new Telefone(dto.getIdPessoa(), this.telefone);
 			Telefone celular = new Telefone(dto.getIdPessoa(), this.celular);
@@ -377,43 +408,47 @@ public class PessoaMB {
 			ejbTelefone.save(telefone);
 			ejbTelefone.save(celular);
 
-			Filiacao filiacao1 = new Filiacao(this.nomeFiliacao1, Integer.parseInt(this.idTipoFiliacao1), dto.getIdPessoa());
-			Filiacao filiacao2 = new Filiacao(this.nomeFiliacao2, Integer.parseInt(this.idTipoFiliacao2), dto.getIdPessoa());
+			Filiacao filiacao1 = new Filiacao(this.nomeFiliacao1,
+					Integer.parseInt(this.idTipoFiliacao1), dto.getIdPessoa());
+			Filiacao filiacao2 = new Filiacao(this.nomeFiliacao2,
+					Integer.parseInt(this.idTipoFiliacao2), dto.getIdPessoa());
 
 			ejbFiliacao.save(filiacao1);
 			ejbFiliacao.save(filiacao2);
 
-			if(tipoPessoa.equals("aluno")){
-				Aluno aluno = new Aluno(dto.getIdPessoa(),this.getFormaPagamento());
+			if (tipoPessoa.equals("aluno")) {
+				Aluno aluno = new Aluno(dto.getIdPessoa(),
+						this.getFormaPagamento());
 				ejbAluno.save(aluno);
-			}else if(tipoPessoa.equals("funcionario")){
+			} else if (tipoPessoa.equals("funcionario")) {
 				Date data = null;
-				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");  
-		        format.setLenient(false);  
-		        try {  
-		            data = format.parse(this.getDataAdmissao());  
-		        } catch (Exception ex) {  
-		            ex.printStackTrace();  
-		        }  
-				Funcionario funcionario = new Funcionario(dto.getIdPessoa(),data,this.getCargo());
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+				format.setLenient(false);
+				try {
+					data = format.parse(this.getDataAdmissao());
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				Funcionario funcionario = new Funcionario(dto.getIdPessoa(),
+						data, this.getCargo());
 				ejbFuncionario.save(funcionario);
-			}else if(tipoPessoa.equals("professor")){
-				Professor professor = new Professor(dto.getIdPessoa(),this.getFormacao());
+			} else if (tipoPessoa.equals("professor")) {
+				Professor professor = new Professor(dto.getIdPessoa(),
+						this.getFormacao());
 				ejbProfessor.save(professor);
 			}
-			
-			
-			if(tipoPessoa.equals("professor") || tipoPessoa.equals("aluno")){
-				for (int i = 0; i< horarioList.length;i++) {
-					HorarioPessoa horarioPessoa = new HorarioPessoa(dto.getIdPessoa(),
-							horarioList[i]);
+
+			if (tipoPessoa.equals("professor") || tipoPessoa.equals("aluno")) {
+				for (int i = 0; i < horarioList.length; i++) {
+					HorarioPessoa horarioPessoa = new HorarioPessoa(
+							dto.getIdPessoa(), horarioList[i]);
 					ejbHorarioPessoa.save(horarioPessoa);
 				}
 			}
-			
-			
-			ejbUsuario.save(new Usuario(this.login, this.senha,dto.getIdPessoa()));
-			
+
+			ejbUsuario.save(new Usuario(this.login, this.senha, dto
+					.getIdPessoa()));
+
 			this.setMsgAviso("Gravação com sucesso");
 
 		} catch (Exception ex) {

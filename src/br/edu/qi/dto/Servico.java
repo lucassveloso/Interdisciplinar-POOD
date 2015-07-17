@@ -1,12 +1,12 @@
 package br.edu.qi.dto;
 
-public class Servicos {
+public class Servico {
 
 	private int idItem;
 	private int duracao;
 	private String especificacao;
 
-	public Servicos(int idItem, int duracao, String especificacao) {
+	public Servico(int idItem, String especificacao, int duracao) {
 		this.idItem = idItem;
 		this.duracao = duracao;
 		this.especificacao = especificacao;

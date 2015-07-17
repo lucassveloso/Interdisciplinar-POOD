@@ -3,15 +3,10 @@
 		$(function(){
 			  $(".classeCbTipo").change(function(e){
 			   var tipo = $(this).val();
-				$("#professor").hide();
-				$("#funcionario").hide();
-				$("#aluno").hide();
+				$("#produto").hide();
+				$("#servico").hide();
 				$("#"+tipo).show();
-				if(tipo == "funcionario" || !tipo){
-					$("#horario").hide();
-				}else{
-					$("#horario").show();
-				}
+		
 			  });
 			 });
 		

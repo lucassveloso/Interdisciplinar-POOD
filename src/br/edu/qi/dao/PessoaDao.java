@@ -14,6 +14,10 @@ public class PessoaDao extends GenericDao{
 			+ "pessoas where Id_pessoa=?";
 	
 	private static final String FINDALL = "select * from pessoas";
+	
+	private static final String FINDALUNOS = "select * from pessoas where Tipo_Pessoa = 'aluno'";
+	private static final String FINDPROFESSORES = "select * from pessoas where Tipo_Pessoa = 'professor'";
+	private static final String FINDFUNCIONARIOS = "select * from pessoas where Tipo_Pessoa = 'funcionario'";
 
 	public Pessoa save(Pessoa obj) throws Exception {
 		executeSQL(INSERT,
@@ -82,9 +86,9 @@ public class PessoaDao extends GenericDao{
 				l.add( new Pessoa(
 						rs.getInt("Id_pessoa"),
 						rs.getInt("CEP"),
-						rs.getString("Logradouro"),
-						rs.getString("nome_social"),
 						rs.getString("nome"),
+						rs.getString("nome_social"),
+						rs.getString("Logradouro"),
 						rs.getString("Tipo_Pessoa"),
 						rs.getInt("Id_etnia"),
 						rs.getInt("Id_religiao"),
@@ -98,6 +102,78 @@ public class PessoaDao extends GenericDao{
 		return l;
 	}
 
+	
+	public ArrayList<Pessoa> findAlunos() throws Exception {
+		ArrayList<Pessoa> l = new ArrayList<Pessoa>();
+		try {
+			ResultSet rs = executeQuery(FINDALUNOS);
+			while (rs.next()) {
+				l.add( new Pessoa(
+						rs.getInt("Id_pessoa"),
+						rs.getInt("CEP"),
+						rs.getString("nome"),
+						rs.getString("nome_social"),
+						rs.getString("Logradouro"),
+						rs.getString("Tipo_Pessoa"),
+						rs.getInt("Id_etnia"),
+						rs.getInt("Id_religiao"),
+						rs.getInt("Id_sexo")));
+			}
+		} catch (Exception e) {
+			throw new Exception(
+					"Não foi possível achar todos as Pessoas! "
+							+ e.getMessage());
+		}
+		return l;
+	}
+	
+	public ArrayList<Pessoa> findProfessores() throws Exception {
+		ArrayList<Pessoa> l = new ArrayList<Pessoa>();
+		try {
+			ResultSet rs = executeQuery(FINDPROFESSORES);
+			while (rs.next()) {
+				l.add( new Pessoa(
+						rs.getInt("Id_pessoa"),
+						rs.getInt("CEP"),
+						rs.getString("nome"),
+						rs.getString("nome_social"),
+						rs.getString("Logradouro"),
+						rs.getString("Tipo_Pessoa"),
+						rs.getInt("Id_etnia"),
+						rs.getInt("Id_religiao"),
+						rs.getInt("Id_sexo")));
+			}
+		} catch (Exception e) {
+			throw new Exception(
+					"Não foi possível achar todos as Pessoas! "
+							+ e.getMessage());
+		}
+		return l;
+	}
+	
+	public ArrayList<Pessoa> findFuncionarios() throws Exception {
+		ArrayList<Pessoa> l = new ArrayList<Pessoa>();
+		try {
+			ResultSet rs = executeQuery(FINDFUNCIONARIOS);
+			while (rs.next()) {
+				l.add( new Pessoa(
+						rs.getInt("Id_pessoa"),
+						rs.getInt("CEP"),
+						rs.getString("nome"),
+						rs.getString("nome_social"),
+						rs.getString("Logradouro"),
+						rs.getString("Tipo_Pessoa"),
+						rs.getInt("Id_etnia"),
+						rs.getInt("Id_religiao"),
+						rs.getInt("Id_sexo")));
+			}
+		} catch (Exception e) {
+			throw new Exception(
+					"Não foi possível achar todos as Pessoas! "
+							+ e.getMessage());
+		}
+		return l;
+	}
 
 
 }
