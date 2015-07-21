@@ -65,4 +65,17 @@ public class ProdutoBean  {
 		}
 	}
 	
+	public void updateEstoque(int estoque, int id) throws Exception
+	{
+		try
+		{
+			ProdutoDao dao = new ProdutoDao();
+			
+			dao.UpdateEstoque(estoque, id);
+		}catch(Exception ex)
+		{
+			throw new Exception("Erro ao salvar: "+ex.getMessage());
+		}
+	}
+	
 }

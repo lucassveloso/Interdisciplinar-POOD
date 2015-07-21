@@ -8,13 +8,13 @@ public class Venda {
 	private float valorTotal;
 	
 	
-	public Venda(int idPessoa, int idVenda, float valorTotal) {
+	public Venda(int idVenda, int idPessoa, float valorTotal) {
 		this.idPessoa = idPessoa;
 		this.idVenda = idVenda;
 		this.valorTotal = valorTotal;
 	}
-	public Venda(int idVenda, float valorTotal) {
-		this.idVenda = idVenda;
+	public Venda(int idPessoa, float valorTotal) {
+		this.idPessoa = idPessoa;
 		this.valorTotal = valorTotal;
 	}
 	public int getIdPessoa() {

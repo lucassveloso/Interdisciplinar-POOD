@@ -20,6 +20,9 @@ public class VendaDao extends GenericDao  {
 		executeSQL(INSERT, obj.getIdPessoa(),obj.getValorTotal());
 		
 		ArrayList<Venda> Venda = findAll();
+		for (Venda venda2 : Venda) {
+			System.out.println("IDFINDA: "+venda2.getIdVenda());
+		}
 		return Venda.get(Venda.size()-1);
 	}
 

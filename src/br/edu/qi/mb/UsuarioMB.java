@@ -134,6 +134,19 @@ public class UsuarioMB {
 		}
 	}
 
+	public void logOff(ComponentSystemEvent event) {
+
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		session.removeAttribute("Usuario");
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc
+				.getApplication().getNavigationHandler();
+
+		nav.performNavigation("login");
+	}
+
 	public void setTipoPessoa(String tipoPessoa) {
 		this.tipoPessoa = tipoPessoa;
 	}
@@ -145,7 +158,5 @@ public class UsuarioMB {
 		Pessoa p = ejbpessoa.find(dto.getIdPessoa());
 		return p.getTipoPessoa();
 	}
-
-
 
 }

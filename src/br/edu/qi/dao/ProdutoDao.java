@@ -14,6 +14,8 @@ public class ProdutoDao extends GenericDao implements IDao<Produto> {
 			+ "Produtos where Id_item=?";
 
 	private static final String FINDALL = "select * from Produtos";
+	
+	private static final String UPDATE_ESTOQUE = "UPDATE Produtos SET quantidade=? WHERE Id_item=?";
 
 	public void save(Produto obj) throws Exception {
 		executeSQL(INSERT,obj.getIdItem(), obj.getQuantidade(),
@@ -50,6 +52,14 @@ public class ProdutoDao extends GenericDao implements IDao<Produto> {
 			throw new Exception("Id incorreto! " + e.getMessage());
 		}
 		return l;
+	}
+	
+	public void UpdateEstoque(int estoqueAtualizado, int id) throws Exception {
+		try {
+			executeSQL(UPDATE_ESTOQUE, estoqueAtualizado, id);
+		} catch (Exception e) {
+			throw new Exception("Não foi possivel dar update no estoque! " + e.getMessage());
+		}
 	}
 
 	public ArrayList<Produto> findAll() throws Exception {

@@ -87,7 +87,7 @@ public class PessoaMB {
 
 	public ArrayList<Pessoa> getPessoaList() {
 		try {
-			pessoaList = ejb.findAll(null);
+			pessoaList = ejb.findAll("");
 			return pessoaList;
 		} catch (Exception e) {
 			this.setMsgAviso("");
@@ -371,7 +371,7 @@ public class PessoaMB {
 			throw new Exception("Informe o Nome do segundo parente");
 
 		if (this.tipoPessoa == null)
-			throw new Exception("Por favor, selecione um tipo de Item");
+			throw new Exception("Por favor, selecione um tipo de pessoa");
 
 		if (this.login.trim().length() == 0)
 			throw new Exception("Informe o Login");

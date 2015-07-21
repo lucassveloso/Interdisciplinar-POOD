@@ -21,6 +21,7 @@ import br.edu.qi.bean.VendaBean;
 import br.edu.qi.dto.Item;
 import br.edu.qi.dto.ItemVenda;
 import br.edu.qi.dto.Produto;
+import br.edu.qi.dto.ProdutoItem;
 import br.edu.qi.dto.Venda;
 import br.edu.qi.util.Numeric;
 
@@ -38,14 +39,18 @@ public class VendaMB {
 	@EJB
 	ItemVendaBean ejbItemVenda;
 
-	public String idPessoa;
+	public String idPessoaAluno;
+	public String idPessoaFuncionario;
+	public String idPessoaProfessor;
+	public String tipoPessoa;
 	public int idItemComprado;
 	public String data;
 	public String quantidade;
 	public String valorTotal;
 	public String msgAviso;
 	public ArrayList<Venda> VendaList;
-	public ArrayList<Produto> ProdutoList;
+	public ArrayList<ProdutoItem> ProdutoList;
+	public ArrayList<ProdutoItem> ProdutoListTodos;
 
 	public ArrayList<Venda> getVendaList() {
 		try {
@@ -58,12 +63,57 @@ public class VendaMB {
 		}
 	}
 
-	public String getIdPessoa() {
-		return idPessoa;
+	public ArrayList<ProdutoItem> getProdutoListTodos() {
+		try {
+			ProdutoListTodos = new ArrayList<ProdutoItem>();
+			ArrayList<Produto> produtos = ejbProduto.findAll();
+			Item item;
+			for (Produto produto : produtos) {
+				if (produto.getQuantidade() != 0) {
+
+					item = ejbItem.find(produto.getIdItem());
+					ProdutoListTodos.add(new ProdutoItem(item, produto));
+				}
+			}
+
+			return ProdutoListTodos;
+		} catch (Exception e) {
+			this.setMsgAviso("");
+			setMessage("msgErro", e.getMessage());
+			return null;
+		}
 	}
 
-	public void setIdPessoa(String idPessoa) {
-		this.idPessoa = idPessoa;
+	public String getIdPessoaAluno() {
+		return idPessoaAluno;
+	}
+
+	public void setIdPessoaAluno(String idPessoaAluno) {
+		this.idPessoaAluno = idPessoaAluno;
+	}
+
+	public String getIdPessoaFuncionario() {
+		return idPessoaFuncionario;
+	}
+
+	public void setIdPessoaFuncionario(String idPessoaFuncionario) {
+		this.idPessoaFuncionario = idPessoaFuncionario;
+	}
+
+	public String getIdPessoaProfessor() {
+		return idPessoaProfessor;
+	}
+
+	public void setIdPessoaProfessor(String idPessoaProfessor) {
+		this.idPessoaProfessor = idPessoaProfessor;
+	}
+
+	public String getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
 	}
 
 	public String getData() {
@@ -74,15 +124,15 @@ public class VendaMB {
 		this.data = data;
 	}
 
-	public ArrayList<Produto> getProdutoList() {
+	public ArrayList<ProdutoItem> getProdutoList() {
 		if (ProdutoList == null) {
-			ProdutoList = new ArrayList<Produto>();
+			ProdutoList = new ArrayList<ProdutoItem>();
 		}
 		return ProdutoList;
 	}
 
-	public void setProdutoList(ArrayList<Produto> ProdutoList) {
-		ProdutoList = ProdutoList;
+	public void setProdutoList(ArrayList<ProdutoItem> ProdutoList) {
+		this.ProdutoList = ProdutoList;
 	}
 
 	public int getidItemComprado() {
@@ -123,40 +173,109 @@ public class VendaMB {
 		FacesContext.getCurrentInstance().addMessage(objErro, message);
 	}
 
-	private void validation() throws Exception {
+	private void validationItemComprado() throws Exception {
+		System.out.println(tipoPessoa);
+		if (this.tipoPessoa == null)
+			throw new Exception("Informe o tipo de comprador");
 
+		switch (tipoPessoa) {
+		case "aluno":
+			if (this.idPessoaAluno.trim().length() == 0)
+				throw new Exception("Informe o aluno");
+			break;
+		case "professor":
+			if (this.idPessoaAluno.trim().length() == 0)
+				throw new Exception("Informe o professor");
+			break;
+		case "funcionario":
+			if (this.idPessoaAluno.trim().length() == 0)
+				throw new Exception("Informe o funcionario");
+			break;
+		}
+
+		if (this.idItemComprado == 0)
+			throw new Exception("Selecione um Produto");
+
+		if (this.quantidade.trim().length() == 0)
+			throw new Exception("Informe a quantidade");
+
+		if (!Numeric.isNumeric(this.quantidade))
+			throw new Exception("Informe apenas números na quantidade");
+	}
+
+	private void validation() throws Exception {
+		if (this.tipoPessoa == null)
+			throw new Exception("Informe o tipo de comprador");
+
+		switch (tipoPessoa) {
+		case "aluno":
+			if (this.idPessoaAluno.trim().length() == 0)
+				throw new Exception("Informe o aluno");
+			break;
+		case "professor":
+			if (this.idPessoaAluno.trim().length() == 0)
+				throw new Exception("Informe o professor");
+			break;
+		case "funcionario":
+			if (this.idPessoaAluno.trim().length() == 0)
+				throw new Exception("Informe o funcionario");
+			break;
+		}
 	}
 
 	public void addItemComprado() throws Exception {
-		System.out.println(idItemComprado);
-		Produto p = ejbProduto.find(idItemComprado);
-		Item i = ejbItem.find(idItemComprado);
+		try {
+			validationItemComprado();
+			int estoque = 0;
+			Produto p = ejbProduto.find(idItemComprado);
+			Item i = ejbItem.find(idItemComprado);
 
-		int estoque = p.getQuantidade() - Integer.parseInt(this.quantidade);
-		System.out.println(estoque);
-		if (estoque > 0) {
+			int quantidadeProdutos = 0;
 			p.setQuantidade(Integer.parseInt(this.quantidade));
-			// Eu sei que é gamb...
-			p.setLocal(i.getDescricao());
-			ProdutoList.add(p);
 
-			if (valorTotal.equals("")) {
-				valorTotal = "0";
-			}
+			ProdutoItem pi = new ProdutoItem(i, p);
+			boolean piExistente = false;
 
-			float valor = Float.parseFloat(valorTotal);
-
-			Item item = new Item();
-			for (Produto pro : ProdutoList) {
-				item = ejbItem.find(pro.getIdItem());
-				if (item.getValor() != 0 && pro.getQuantidade() != 0) {
-					valor += (item.getValor() * pro.getQuantidade());
+			for (ProdutoItem pro : ProdutoList) {
+				if (pro.getItem().getIdItem() == pi.getItem().getIdItem()) {
+					int quantidadeAtualizada = pro.getProduto().getQuantidade()
+							+ pi.getProduto().getQuantidade();
+					pro.getProduto().setQuantidade(quantidadeAtualizada);
+					piExistente = true;
+					quantidadeProdutos = pro.getProduto().getQuantidade();
 				}
 			}
-			valorTotal = String.valueOf(valor);
-		} else {
-			this.setMsgAviso("Não possuimos " + quantidade
-					+ " unidades do Produto selecionado");
+
+			if (!piExistente)
+				ProdutoList.add(pi);
+
+			estoque = p.getQuantidade()
+					- (Integer.parseInt(this.quantidade) + quantidadeProdutos);
+			
+			System.out.println(estoque);
+
+			if (estoque > 0) {
+
+				if (valorTotal.equals("")) {
+					valorTotal = "0";
+				}
+
+				float valor = Float.parseFloat(valorTotal);
+				for (ProdutoItem pro : ProdutoList) {
+					if (pro.getItem().getValor() != 0
+							&& pro.getProduto().getQuantidade() != 0) {
+						valor += (pro.getItem().getValor() * pro.getProduto()
+								.getQuantidade());
+					}
+				}
+				valorTotal = String.valueOf(valor);
+			} else {
+				this.setMsgAviso("Não possuimos " + quantidade
+						+ " unidades do Produto selecionado");
+			}
+		} catch (Exception ex) {
+			this.setMsgAviso("");
+			setMessage("msgErro", ex.getMessage());
 		}
 
 	}
@@ -164,16 +283,40 @@ public class VendaMB {
 	public void gravar() {
 		try {
 			this.setMsgAviso("");
+			validation();
+			int idPessoa = 0;
 
-			Venda venda = new Venda(Integer.parseInt(idPessoa), Float.parseFloat(valorTotal));
-			System.out.println("valor::::" + Float.parseFloat(valorTotal));
+			switch (tipoPessoa) {
+			case "aluno":
+				idPessoa = Integer.parseInt(idPessoaAluno);
+				break;
+			case "professor":
+				idPessoa = Integer.parseInt(idPessoaProfessor);
+				break;
+			case "funcionario":
+				idPessoa = Integer.parseInt(idPessoaFuncionario);
+				break;
+			}
+
+			Venda venda = new Venda(idPessoa, Float.parseFloat(valorTotal));
+
 			venda = ejb.save(venda);
-
-			for (Produto p : ProdutoList) {
-				Item item = ejbItem.find(p.getIdItem());
-				ItemVenda itemvenda = new ItemVenda(p.getIdItem(),
-						venda.getIdVenda(), p.getQuantidade(), item.getValor());
+			Produto produtoEstoque;
+			for (ProdutoItem p : ProdutoList) {
+				ItemVenda itemvenda = new ItemVenda(p.getItem().getIdItem(),
+						venda.getIdVenda(), p.getProduto().getQuantidade(), p
+								.getItem().getValor());
 				ejbItemVenda.save(itemvenda);
+				System.out.println("ID:::" + p.getItem().getIdItem());
+				produtoEstoque = ejbProduto.find(p.getItem().getIdItem());
+				System.out.println("qUANTIDADE:::"
+						+ (produtoEstoque.getQuantidade() - p.getProduto()
+								.getQuantidade()));
+
+				ejbProduto
+						.updateEstoque((produtoEstoque.getQuantidade() - p
+								.getProduto().getQuantidade()), p.getItem()
+								.getIdItem());
 			}
 
 			this.setMsgAviso("Gravação com sucesso");

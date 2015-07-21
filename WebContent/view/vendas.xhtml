@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 <f:event listener="#{usuarioMB.isLogado}" type="preRenderView" />
 <h:head>
 
@@ -24,30 +25,34 @@
 </h:head>
 
 <h:body>
-<h:form>
-	<p:menubar autoDisplay="false">
-		<p:submenu rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" label="Usuários">
-			<p:menuitem value="Cadastrar Usuários"
-				url="#{request.pathInfo}/view/usuarios.xhtml" />
-			<p:menuitem value="Cadastrar Deficiencias"
-				url="#{request.pathInfo}/view/deficiencias.xhtml" />
-		</p:submenu>
-		<p:submenu label="Turmas">
-			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}" value="Cadastrar turmas"
-				url="#"></p:menuitem>
-			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}" value="Matrícula"
-				url="#"></p:menuitem>
-		</p:submenu>
-		<p:submenu label="Loja">
-			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" value="Cadastrar Itens"
-				url="#{request.pathInfo}/view/itens.xhtml"></p:menuitem>
-			<p:menuitem value="Vendas"
-				url="#{request.pathInfo}/view/vendas.xhtml"></p:menuitem>
-		</p:submenu>
-		<f:facet name="options">
-			<p:commandButton action="#{usuarioMB.logout}" type="button" value="Logout" icon="ui-icon-extlink" />
-		</f:facet>
-	</p:menubar>
+	<h:form>
+		<p:menubar autoDisplay="false">
+			<p:submenu rendered="#{usuarioMB.tipoPessoa == 'funcionario'}"
+				label="Usuários">
+				<p:menuitem value="Cadastrar Usuários"
+					url="#{request.pathInfo}/view/usuarios.xhtml" />
+				<p:menuitem value="Cadastrar Deficiencias"
+					url="#{request.pathInfo}/view/deficiencias.xhtml" />
+			</p:submenu>
+			<p:submenu label="Turmas">
+				<p:menuitem
+					rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}"
+					value="Cadastrar turmas" url="#"></p:menuitem>
+				<p:menuitem
+					rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}"
+					value="Matrícula" url="#"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Loja">
+				<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}"
+					value="Cadastrar Itens" url="#{request.pathInfo}/view/itens.xhtml"></p:menuitem>
+				<p:menuitem value="Vendas"
+					url="#{request.pathInfo}/view/vendas.xhtml"></p:menuitem>
+			</p:submenu>
+			<f:facet name="options">
+				<p:commandButton action="#{usuarioMB.logout}" type="button"
+					value="Logout" icon="ui-icon-extlink" />
+			</f:facet>
+		</p:menubar>
 	</h:form>
 
 	<div class="titulo-pagina">
@@ -58,10 +63,9 @@
 			<h:form name="formulario">
 				<div class="form-group">
 					<div class="col-xs-6 col-md-6 esquerda">
-
 						<h:outputLabel class="control-label" value="Comprador: " />
 						<h:selectOneMenu class="form-control classeCbTipo" id="cbTipo"
-							value="#{itemMB.tipoItem}">
+							value="#{vendaMB.tipoPessoa}">
 							<f:selectItem id="selecione" class="tipo" itemLabel="Selecione" />
 							<f:selectItem id="CompradorAluno" class="tipo" itemValue="aluno"
 								itemLabel="Aluno" />
@@ -72,14 +76,14 @@
 						</h:selectOneMenu>
 						<p></p>
 						<div class="divtipos" id="aluno">
-							<h:selectOneMenu class="form-control" value="#{pessoaMB.nome}">
+							<h:selectOneMenu class="form-control" value="#{vendaMB.idPessoaAluno}">
 								<f:selectItems value="#{pessoaMB.pessoaListAluno}" var="pessoa"
 									itemValue="#{pessoa.idPessoa}" itemLabel="#{pessoa.nome}" />
 							</h:selectOneMenu>
 							<p></p>
 						</div>
 						<div class="divtipos" id="funcionario">
-							<h:selectOneMenu class="form-control" value="#{pessoaMB.nome}">
+							<h:selectOneMenu class="form-control" value="#{vendaMB.idPessoaFuncionario}">
 								<f:selectItems value="#{pessoaMB.pessoaListFuncionario}"
 									var="pessoa" itemValue="#{pessoa.idPessoa}"
 									itemLabel="#{pessoa.nome}" />
@@ -87,37 +91,33 @@
 							<p></p>
 						</div>
 						<div class="divtipos" id="professor">
-							<h:selectOneMenu class="form-control" value="#{pessoaMB.nome}">
+							<h:selectOneMenu class="form-control" value="#{vendaMB.idPessoaProfessor}">
 								<f:selectItems value="#{pessoaMB.pessoaListProfessor}"
 									var="pessoa" itemValue="#{pessoa.idPessoa}"
 									itemLabel="#{pessoa.nome}" />
 							</h:selectOneMenu>
 							<p></p>
 						</div>
-						<h:form>
-							<h:outputLabel class="control-label"
-								value="Selecione os Produtos: " />
-							<h:selectOneListbox class="form-control" id="subscriptions"
-								value="#{vendaMB.idItemComprado}"
-								converter="javax.faces.Integer">
-								<f:selectItems class="item" value="#{itemMB.itemProdutosList}"
-									var="item" itemValue="#{item.idItem}"
-									itemLabel="Nome: #{item.descricao} / Valor: #{item.valor}" />
-							</h:selectOneListbox>
-							<p></p>
-							<h:outputLabel class="control-label" value="Quantidade: " />
-							<h:inputText class="form-control" value="#{vendaMB.quantidade}"></h:inputText>
-							<h:commandButton class="btn btn-success"
-								action="#{vendaMB.addItemComprado}" value="Enviar" />
-						</h:form>
-
+						<h:outputLabel class="control-label"
+							value="Selecione os Produtos: " />
+						<h:selectOneListbox class="form-control" id="subscriptions"
+							value="#{vendaMB.idItemComprado}" converter="javax.faces.Integer">
+							<f:selectItems class="item" value="#{vendaMB.produtoListTodos}"
+								var="produtoitem" itemValue="#{produtoitem.item.idItem}"
+								itemLabel="Nome: #{produtoitem.item.descricao} / Valor: #{produtoitem.item.valor} / Estoque: #{produtoitem.produto.quantidade}" />
+						</h:selectOneListbox>
+						<p></p>
+						<h:outputLabel class="control-label" value="Quantidade: " />
+						<h:inputText class="form-control" value="#{vendaMB.quantidade}"></h:inputText>
+						<h:commandButton class="btn btn-success"
+							action="#{vendaMB.addItemComprado}" value="Enviar" />
 					</div>
 					<div class="col-xs-6 col-md-6 direita">
 						<h:outputLabel class="control-label" value="Produtos Comprados: " />
 						<h:selectOneListbox class="form-control" id="subscription">
 							<f:selectItems class="item" value="#{vendaMB.produtoList}"
-								var="produto" itemValue="#{produto.idItem}"
-								itemLabel="Nome: #{produto.local} / Quantidade: #{produto.quantidade}" />
+								var="produtoitem" itemValue="#{produto.idItem}"
+								itemLabel="Nome: #{produtoitem.item.descricao} / Quantidade: #{produtoitem.produto.quantidade}" />
 						</h:selectOneListbox>
 						<p></p>
 						<h:outputLabel class="control-label"
@@ -132,12 +132,8 @@
 						<p></p>
 						<h:outputText value="#{vendaMB.msgAviso}" />
 						<h:messages id="msgErro" style="color: red"></h:messages>
-
 					</div>
-
 				</div>
-
-
 			</h:form>
 		</div>
 	</div>
