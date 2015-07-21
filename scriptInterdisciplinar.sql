@@ -252,3 +252,6 @@ insert into Tipo_filiacao values(2,'Mãe');
 
 insert into Cursos values(1,'ADS');
 insert into Cursos values(2,'Administração');
+
+insert into Pessoas values(1,9999999,'Local','Admin','Admin','funcionario',1,1,1);
+insert into Usuarios values("adm","adm123",1);
