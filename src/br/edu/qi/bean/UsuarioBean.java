@@ -26,6 +26,19 @@ public class UsuarioBean  {
 		}
 	}
 	
+	public Usuario findUsuario(Usuario obj) throws Exception
+	{
+		try
+		{
+			UsuarioDao dao = new UsuarioDao();
+			
+			return dao.findUsuario(obj);
+		}catch(Exception ex)
+		{
+			throw new Exception("Erro ao procurar: "+ex.getMessage());
+		}
+	}
+	
 	public ArrayList<Usuario> findAll() throws Exception
 	{
 		try

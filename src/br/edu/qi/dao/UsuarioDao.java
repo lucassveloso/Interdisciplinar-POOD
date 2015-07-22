@@ -12,6 +12,9 @@ public class UsuarioDao extends GenericDao implements IDao<Usuario> {
 
 	private static final String SELECT = "select * from "
 			+ "Usuarios where login=?";
+	
+	private static final String SELECTLOGIN = "select * from "
+			+ "Usuarios where login=? AND senha=?";
 
 	private static final String FINDALL = "select * from Usuarios";
 
@@ -24,6 +27,22 @@ public class UsuarioDao extends GenericDao implements IDao<Usuario> {
 		Usuario l = null;
 		try {
 			ResultSet rs = executeQuery(SELECT, obj.getLogin());
+			if (rs.next()) {
+				return l = new Usuario(
+						rs.getString("login"),
+						rs.getString("senha"), 
+						rs.getInt("Id_pessoa"));
+			}
+		} catch (Exception e) {
+			throw new Exception("Id incorreto! " + e.getMessage());
+		}
+		return l;
+	}
+	
+	public Usuario findUsuario(Usuario obj) throws Exception {
+		Usuario l = null;
+		try {
+			ResultSet rs = executeQuery(SELECTLOGIN, obj.getLogin(),obj.getSenha());
 			if (rs.next()) {
 				return l = new Usuario(
 						rs.getString("login"),

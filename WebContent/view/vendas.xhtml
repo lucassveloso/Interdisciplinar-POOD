@@ -21,6 +21,7 @@
 	<script type="text/javascript"
 		src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="js/pessoas.js"></script>
+	<script type="text/javascript" src="js/vendas.js"></script>
 
 </h:head>
 
@@ -114,7 +115,7 @@
 					</div>
 					<div class="col-xs-6 col-md-6 direita">
 						<h:outputLabel class="control-label" value="Produtos Comprados: " />
-						<h:selectOneListbox class="form-control" id="subscription">
+						<h:selectOneListbox class="form-control" id="subscription" readonly="true" >
 							<f:selectItems class="item" value="#{vendaMB.produtoList}"
 								var="produtoitem" itemValue="#{produto.idItem}"
 								itemLabel="Nome: #{produtoitem.item.descricao} / Quantidade: #{produtoitem.produto.quantidade}" />
@@ -122,8 +123,10 @@
 						<p></p>
 						<h:outputLabel class="control-label"
 							value="Valor Total da Compra:  " />
-						<h:inputText class="form-control" value="#{vendaMB.valorTotal}"></h:inputText>
-
+						<h:inputText readonly="true" class="form-control" value="#{vendaMB.valorTotal}"></h:inputText>
+						
+						<label id="desconto" >10% de desconto por ser aluno</label>
+						
 						<h:commandButton class="btn btn-success botao"
 							action="#{vendaMB.gravar}" value="Gravar" />
 						<h:commandButton class="btn btn-danger botao" action="index"

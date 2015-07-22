@@ -1,5 +1,6 @@
 package br.edu.qi.mb;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -100,7 +101,7 @@ public class UsuarioMB {
 			this.validation();
 
 			Usuario dto = new Usuario(this.login, this.senha);
-			dto = ejb.find(dto);
+			dto = ejb.findUsuario(dto);
 			if (dto == null) {
 				this.setMsgAviso("Login errado.");
 			} else {
@@ -134,17 +135,15 @@ public class UsuarioMB {
 		}
 	}
 
-	public void logOff(ComponentSystemEvent event) {
+	public void logout() throws IOException {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
-		session.removeAttribute("Usuario");
-		FacesContext fc = FacesContext.getCurrentInstance();
 
-		ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc
-				.getApplication().getNavigationHandler();
 
-		nav.performNavigation("login");
+		    session.invalidate();
+		    FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");  
+		
 	}
 
 	public void setTipoPessoa(String tipoPessoa) {

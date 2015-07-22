@@ -65,17 +65,19 @@ public class VendaMB {
 
 	public ArrayList<ProdutoItem> getProdutoListTodos() {
 		try {
-			ProdutoListTodos = new ArrayList<ProdutoItem>();
-			ArrayList<Produto> produtos = ejbProduto.findAll();
-			Item item;
-			for (Produto produto : produtos) {
-				if (produto.getQuantidade() != 0) {
+			if (ProdutoListTodos == null) {
 
-					item = ejbItem.find(produto.getIdItem());
-					ProdutoListTodos.add(new ProdutoItem(item, produto));
+				ProdutoListTodos = new ArrayList<ProdutoItem>();
+				ArrayList<Produto> produtos = ejbProduto.findAll();
+				Item item;
+				for (Produto produto : produtos) {
+					if (produto.getQuantidade() != 0) {
+
+						item = ejbItem.find(produto.getIdItem());
+						ProdutoListTodos.add(new ProdutoItem(item, produto));
+					}
 				}
 			}
-
 			return ProdutoListTodos;
 		} catch (Exception e) {
 			this.setMsgAviso("");
@@ -125,9 +127,6 @@ public class VendaMB {
 	}
 
 	public ArrayList<ProdutoItem> getProdutoList() {
-		if (ProdutoList == null) {
-			ProdutoList = new ArrayList<ProdutoItem>();
-		}
 		return ProdutoList;
 	}
 
@@ -152,7 +151,9 @@ public class VendaMB {
 	}
 
 	public String getValorTotal() throws Exception {
-
+		if (valorTotal == null) {
+			valorTotal = "0.0";
+		}
 		return valorTotal;
 	}
 
@@ -174,7 +175,6 @@ public class VendaMB {
 	}
 
 	private void validationItemComprado() throws Exception {
-		System.out.println(tipoPessoa);
 		if (this.tipoPessoa == null)
 			throw new Exception("Informe o tipo de comprador");
 
@@ -226,53 +226,84 @@ public class VendaMB {
 	public void addItemComprado() throws Exception {
 		try {
 			validationItemComprado();
-			int estoque = 0;
-			Produto p = ejbProduto.find(idItemComprado);
-			Item i = ejbItem.find(idItemComprado);
+			ProdutoItem produtoSelecionado = new ProdutoItem(
+					ejbItem.find(idItemComprado),
+					ejbProduto.find(idItemComprado));
+			int estoqueProdutoSelecionado = 0;
 
-			int quantidadeProdutos = 0;
-			p.setQuantidade(Integer.parseInt(this.quantidade));
-
-			ProdutoItem pi = new ProdutoItem(i, p);
-			boolean piExistente = false;
-
-			for (ProdutoItem pro : ProdutoList) {
-				if (pro.getItem().getIdItem() == pi.getItem().getIdItem()) {
-					int quantidadeAtualizada = pro.getProduto().getQuantidade()
-							+ pi.getProduto().getQuantidade();
-					pro.getProduto().setQuantidade(quantidadeAtualizada);
-					piExistente = true;
-					quantidadeProdutos = pro.getProduto().getQuantidade();
+			for (ProdutoItem produto : ProdutoListTodos) {
+				if (produto.getItem().getIdItem() == produtoSelecionado
+						.getItem().getIdItem()) {
+					estoqueProdutoSelecionado = produto.getProduto()
+							.getQuantidade();
 				}
 			}
 
-			if (!piExistente)
-				ProdutoList.add(pi);
+			int quantidadeProdutosSelecionado = Integer
+					.parseInt(this.quantidade);
+			produtoSelecionado.getProduto().setQuantidade(
+					quantidadeProdutosSelecionado);
 
-			estoque = p.getQuantidade()
-					- (Integer.parseInt(this.quantidade) + quantidadeProdutos);
-			
-			System.out.println(estoque);
+			if (quantidadeProdutosSelecionado <= estoqueProdutoSelecionado) {
+				this.msgAviso = "";
 
-			if (estoque > 0) {
+				estoqueProdutoSelecionado -= quantidadeProdutosSelecionado;
 
-				if (valorTotal.equals("")) {
-					valorTotal = "0";
-				}
-
-				float valor = Float.parseFloat(valorTotal);
-				for (ProdutoItem pro : ProdutoList) {
-					if (pro.getItem().getValor() != 0
-							&& pro.getProduto().getQuantidade() != 0) {
-						valor += (pro.getItem().getValor() * pro.getProduto()
-								.getQuantidade());
+				for (ProdutoItem produto : ProdutoListTodos) {
+					if (produto.getItem().getIdItem() == produtoSelecionado
+							.getItem().getIdItem()) {
+						produto.getProduto().setQuantidade(
+								estoqueProdutoSelecionado);
 					}
 				}
+
+				if (ProdutoList == null) {
+					ProdutoList = new ArrayList<ProdutoItem>();
+					ProdutoList.add(produtoSelecionado);
+				} else {
+					boolean contem = false;
+					for (ProdutoItem produto : ProdutoList) {
+						if (produto.getItem().getIdItem() == produtoSelecionado
+								.getItem().getIdItem()) {
+							int quantidadeAtualizada = produto.getProduto()
+									.getQuantidade()
+									+ produtoSelecionado.getProduto()
+											.getQuantidade();
+							produto.getProduto().setQuantidade(
+									quantidadeAtualizada);
+							contem = true;
+						}
+					}
+
+					if (!contem) {
+						ProdutoList.add(produtoSelecionado);
+					}
+
+				}
+
+				
+				float valor = 0;
+			
+				for (ProdutoItem produto : ProdutoList) {
+					valor += (produto.getItem().getValor() * produto
+							.getProduto().getQuantidade());
+					
+					
+
+				}
+					
+				if (tipoPessoa.equals("aluno")) {
+					valor = (float) (valor * 0.90);
+
+				}
+				
 				valorTotal = String.valueOf(valor);
+
 			} else {
 				this.setMsgAviso("Não possuimos " + quantidade
 						+ " unidades do Produto selecionado");
 			}
+
 		} catch (Exception ex) {
 			this.setMsgAviso("");
 			setMessage("msgErro", ex.getMessage());
