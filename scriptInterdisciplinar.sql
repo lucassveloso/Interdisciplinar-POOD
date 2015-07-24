@@ -84,6 +84,11 @@ FOREIGN KEY(Id_pessoa) REFERENCES Pessoas (Id_pessoa)
 );
 
 
+CREATE TABLE Cursos (
+Id_curso Int PRIMARY KEY auto_increment,
+Descricao Varchar(15)
+);
+
 CREATE TABLE Turmas (
 Id_turma Int PRIMARY KEY auto_increment,
 Id_curso Int,
@@ -130,12 +135,6 @@ Id_tipo Int,
 Id_filiado Int,
 FOREIGN KEY(Id_tipo) REFERENCES Tipo_filiacao (Id_tipo),
 FOREIGN KEY(Id_filiado) REFERENCES Pessoas (Id_pessoa)
-);
-
-
-CREATE TABLE Cursos (
-Id_curso Int PRIMARY KEY auto_increment,
-Descricao Varchar(15)
 );
 
 
@@ -217,43 +216,43 @@ insert into Sexo values (4,"Mulher Trans.");
 insert into etnias values(1,'Brancos');
 insert into etnias values(2,'Negros');
 insert into etnias values(3,'Mulatos');
-insert into etnias values(4,'IndÌgenas');
+insert into etnias values(4,'Ind√≠genas');
 insert into etnias values(5,'Caboclos');
 insert into etnias values(6,'Cafuzo');
 
 insert into Religiao values(1,'Cristianismo ');
 insert into Religiao values(2,'Islamismo ');
-insert into Religiao values(3,'HinduÌsmo ');
+insert into Religiao values(3,'Hindu√≠smo ');
 insert into Religiao values(4,'Budismo ');
-insert into Religiao values(5,'XintoÌsmo ');
+insert into Religiao values(5,'Xinto√≠smo ');
 insert into Religiao values(6,'Sikhismo');
-insert into Religiao values(7,'JudaÌsmo');
+insert into Religiao values(7,'Juda√≠smo');
 insert into Religiao values(8,'Espiritismo');
 insert into Religiao values(9,'Wicca');
 insert into Religiao values(10,'Ateu');
-insert into Religiao values(11,'AgnÛstico');
+insert into Religiao values(11,'Agn√≥stico');
 
-insert into Horarios values(1,'Segunda','Manh„');
+insert into Horarios values(1,'Segunda','Manh√£');
 insert into Horarios values(2,'Segunda','Tarde');
 insert into Horarios values(3,'Segunda','Noite');
-insert into Horarios values(4,'TerÁa','Manh„');
-insert into Horarios values(5,'TerÁa','Tarde');
-insert into Horarios values(6,'TerÁa','Noite');
-insert into Horarios values(7,'Quarta','Manh„');
+insert into Horarios values(4,'Ter√ßa','Manh√£');
+insert into Horarios values(5,'Ter√ßa','Tarde');
+insert into Horarios values(6,'Ter√ßa','Noite');
+insert into Horarios values(7,'Quarta','Manh√£');
 insert into Horarios values(8,'Quarta','Tarde');
 insert into Horarios values(9,'Quarta','Noite');
-insert into Horarios values(10,'Quinta','Manh„');
+insert into Horarios values(10,'Quinta','Manh√£');
 insert into Horarios values(11,'Quinta','Tarde');
 insert into Horarios values(12,'Quinta','Noite');
-insert into Horarios values(13,'Sexta','Manh„');
+insert into Horarios values(13,'Sexta','Manh√£');
 insert into Horarios values(14,'Sexta','Tarde');
 insert into Horarios values(15,'Sexta','Noite');
 
 insert into Tipo_filiacao values(1,'Pai');
-insert into Tipo_filiacao values(2,'M„e');
+insert into Tipo_filiacao values(2,'M√£e');
 
 insert into Cursos values(1,'ADS');
-insert into Cursos values(2,'AdministraÁ„o');
+insert into Cursos values(2,'Administra√ß√£o');
 
 insert into Pessoas values(1,9999999,'Local','Admin','Admin','funcionario',1,1,1);
 insert into Usuarios values("adm","adm123",1);
