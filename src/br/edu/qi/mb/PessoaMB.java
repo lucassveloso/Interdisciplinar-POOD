@@ -348,6 +348,9 @@ public class PessoaMB {
 
 		if (this.nomeSocial.trim().length() == 0)
 			throw new Exception("Informe o Nome Social");
+		
+		if (this.logradouro.trim().length() == 0)
+			throw new Exception("Informe o Logradouro");
 
 		if (this.cep.trim().length() == 0)
 			throw new Exception("Informe o CEP");
@@ -355,8 +358,6 @@ public class PessoaMB {
 		if (!Numeric.isNumeric(this.cep))
 			throw new Exception("CEP apenas numero");
 
-		if (this.logradouro.trim().length() == 0)
-			throw new Exception("Informe o Logradouro");
 
 		if (this.telefone.trim().length() == 0)
 			throw new Exception("Informe o Telefone");

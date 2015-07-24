@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import br.edu.qi.dto.Item;
-import br.edu.qi.dto.Pessoa;
 
 public class ItemDao extends GenericDao {
 

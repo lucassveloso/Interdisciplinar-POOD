@@ -2,10 +2,9 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-	
 <f:event listener="#{usuarioMB.isLogado}" type="preRenderView" />
 
 <h:head>
@@ -25,7 +24,7 @@
 </h:head>
 
 <h:body>
-<h:form>
+	<h:form>
 	<p:menubar autoDisplay="false">
 		<p:submenu rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" label="Usuários">
 			<p:menuitem value="Cadastrar Usuários"
@@ -35,9 +34,9 @@
 		</p:submenu>
 		<p:submenu label="Turmas">
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}" value="Cadastrar turmas"
-				url="#"></p:menuitem>
+				url="#{request.pathInfo}/view/turmas.xhtml"></p:menuitem>
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}" value="Matrícula"
-				url="#"></p:menuitem>
+				url="#{request.pathInfo}/view/matricula.xhtml"></p:menuitem>
 		</p:submenu>
 		<p:submenu label="Loja">
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" value="Cadastrar Itens"
@@ -55,149 +54,70 @@
 	</div>
 	<div class="container-fluid">
 		<div class="bloco-cadastro">
-
 			<h:form name="formulario">
 				<div class="form-group">
-					<div class="col-xs-6 col-md-4 esquerda">
-						<h:outputLabel class="control-label" value="Nome: " />
-						<h:inputText class="form-control" value="#{pessoaMB.nome}"></h:inputText>
-						<p></p>
-						<h:outputLabel class="control-label" value="Nome Social:  " />
-						<h:inputText class="form-control" value="#{pessoaMB.nomeSocial}"></h:inputText>
-						<p></p>
-						<h:outputLabel class="control-label" value="Sexo: " />
-						<h:selectOneMenu class="form-control" value="#{pessoaMB.idSexo}">
-							<f:selectItems value="#{sexoMB.sexoList}" var="sexo"
-								itemValue="#{sexo.idSexo}" itemLabel="#{sexo.descricao}" />
+					<div class="col-xs-6 col-md-6 esquerda">
+						<h:outputLabel class="control-label" value="Curso: " />
+						<h:selectOneMenu class="form-control" value="#{turmaMB.idCurso}">
+						<f:selectItem id="selecioneCurso" itemLabel="Selecione" />
+							<f:selectItems value="#{cursoMB.cursoList}" var="curso"
+								itemValue="#{curso.idCurso}" itemLabel="#{curso.descricao}" />
 						</h:selectOneMenu>
 						<p></p>
-						<h:outputLabel class="control-label" value="Logradouro:  " />
-						<h:inputText class="form-control" value="#{pessoaMB.logradouro}"></h:inputText>
+						<h:outputLabel class="control-label" value="Data Inicio: " />
+						<h:inputText class="form-control" value="#{turmaMB.dataInicio}"></h:inputText>
 						<p></p>
-						<h:outputLabel class="control-label" value="CEP:  " />
-						<h:inputText class="form-control" value="#{pessoaMB.cep}"></h:inputText>
+						<h:outputLabel class="control-label" value="Data Fim: " />
+						<h:inputText class="form-control" value="#{turmaMB.dataFim}"></h:inputText>
 						<p></p>
-						<h:outputLabel class="control-label" value="Etnia: " />
-						<h:selectOneMenu class="form-control" value="#{pessoaMB.idEtnia}">
-							<f:selectItems value="#{etniaMB.etniaList}" var="etnia"
-								itemValue="#{etnia.idEtnia}" itemLabel="#{etnia.descricao}" />
-						</h:selectOneMenu>
+						<h:outputLabel class="control-label" value="Tema: " />
+						<h:inputText class="form-control" value="#{turmaMB.tema}"></h:inputText>
 						<p></p>
-						<h:outputLabel class="control-label" value="Religião: " />
-						<h:selectOneMenu class="form-control"
-							value="#{pessoaMB.idReligiao}">
-							<f:selectItems value="#{religiaoMB.religiaoList}" var="religiao"
-								itemValue="#{religiao.idReligiao}"
-								itemLabel="#{religiao.descricao}" />
-						</h:selectOneMenu>
+						<h:outputLabel class="control-label" value="Capacidade: " />
+						<h:inputText class="form-control" value="#{turmaMB.capacidade}"></h:inputText>
 						<p></p>
 
-						<h:outputLabel class="control-label" value="Deficiência: " />
-						<h:selectManyListbox class="form-control" id="subscriptions"
-							value="#{pessoaMB.deficienciaList}"
+
+					</div>
+
+
+
+					<div class="col-xs-6 col-md-6 direita">
+							<h:outputLabel class="control-label" value="Horário: " />
+						<h:selectOneMenu class="form-control" value="#{turmaMB.idHorario}" id="comboHorario">
+						<f:selectItem id="selecioneHorario" itemLabel="Selecione" />
+							<f:selectItems value="#{horarioMB.horarioList}" var="horario"
+								itemValue="#{horario.idHorario}"
+								itemLabel="#{horario.dia} / #{horario.turno}" />
+							<p:ajax listener="#{turmaMB.refreshProfessores}"
+								event="change" update="comboProfessores" process="comboHorario, comboProfessores" />
+						</h:selectOneMenu>
+						<p></p>
+						<h:outputLabel class="control-label" value="Professor: " />
+						<h:selectOneMenu class="form-control" id="comboProfessores"
+							value="#{turmaMB.idProfessor}">
+							<f:selectItem id="selecioneProfessor" itemLabel="Selecione" />
+							<f:selectItems value="#{turmaMB.professorList}" var="professor"
+								itemValue="#{professor.idPessoa}" itemLabel="#{professor.nome}" />
+						</h:selectOneMenu>
+						<p></p>
+						<h:outputLabel class="control-label" value="Lista de Produtos: " />
+						<h:selectManyListbox class="form-control"
+							value="#{turmaMB.itemList}"
 							converter="javax.faces.Integer">
-							<f:selectItems class="deficiencias"
-								value="#{deficienciaMB.deficienciaList}" var="deficiencia"
-								itemValue="#{deficiencia.idDeficiencia}"
-								itemLabel="#{deficiencia.descricao} /Grau: #{deficiencia.grau}" />
+							<f:selectItems class="item" value="#{vendaMB.produtoListTodos}"
+								var="produtoitem" itemValue="#{produtoitem.item.idItem}"
+								itemLabel="Nome: #{produtoitem.item.descricao} / Estoque: #{produtoitem.produto.quantidade}" />
 						</h:selectManyListbox>
-						<p></p>
-						<h:outputLabel class="control-label" value="Telefone:  " />
-						<h:inputText class="form-control" value="#{pessoaMB.telefone}"></h:inputText>
-						<h:outputLabel class="control-label" value="Celular  " />
-						<h:inputText class="form-control" value="#{pessoaMB.celular}"></h:inputText>
-						<p></p>
-
-
-					</div>
-					<div class="col-xs-6 col-md-4 ">
-						<h:outputLabel class="control-label" value="Nome dos Parentes:  " />
-						<div>
-							<h:inputText class="form-control inputFiliacao"
-								value="#{pessoaMB.nomeFiliacao1}"></h:inputText>
-							<h:selectOneMenu class="form-control cbFiliacao"
-								value="#{pessoaMB.idTipoFiliacao1}">
-								<f:selectItems value="#{tipoFiliacaoMB.tipoFiliacaoList}"
-									var="tipoFiliacao" itemValue="#{tipoFiliacao.idTipo}"
-									itemLabel="#{tipoFiliacao.descricao}" />
-							</h:selectOneMenu>
-						</div>
-						<div>
-							<h:inputText class="form-control inputFiliacao"
-								value="#{pessoaMB.nomeFiliacao2}"></h:inputText>
-							<p></p>
-							<h:selectOneMenu class="form-control cbFiliacao"
-								value="#{pessoaMB.idTipoFiliacao2}">
-								<f:selectItems value="#{tipoFiliacaoMB.tipoFiliacaoList}"
-									var="tipoFiliacao" itemValue="#{tipoFiliacao.idTipo}"
-									itemLabel="#{tipoFiliacao.descricao}" />
-							</h:selectOneMenu>
-						</div>
-						<h:outputLabel class="control-label" value="Tipo de usuário: " />
-						<h:selectOneMenu class="form-control classeCbTipo" id="cbTipo"
-							value="#{pessoaMB.tipoPessoa}">
-							<f:selectItem id="selecione" class="tipo" itemLabel="Selecione" />
-							<f:selectItem id="ItemAluno" class="tipo" itemValue="aluno"
-								itemLabel="Aluno" />
-							<f:selectItem id="ItemProfessor" class="tipo"
-								itemValue="professor" itemLabel="Professor" />
-							<f:selectItem id="ItemFuncionario" class="tipo"
-								itemValue="funcionario" itemLabel="Funcionario" />
-						</h:selectOneMenu>
-						<p></p>
-						<div class="divtipos" id="aluno">
-							<h:outputLabel class="control-label"
-								value="Forma de Pagamento:  " />
-							<h:inputText class="form-control"
-								value="#{pessoaMB.formaPagamento}"></h:inputText>
-							<p></p>
-						</div>
-						<div class="divtipos" id="funcionario">
-							<h:outputLabel class="control-label" value="Cargo " />
-							<h:inputText class="form-control" value="#{pessoaMB.cargo}"></h:inputText>
-							<h:outputLabel class="control-label" value="Data de Admissão: " />
-							<h:inputText class="form-control"
-								value="#{pessoaMB.dataAdmissao}">
-							</h:inputText>
-							<p></p>
-						</div>
-						<div class="divtipos" id="professor">
-							<h:outputLabel class="control-label" value="Formação: " />
-							<h:inputText class="form-control" value="#{pessoaMB.formacao}"></h:inputText>
-							<p></p>
-						</div>
-						<div class="divtipos" id="horario">
-							<h:outputLabel class="control-label" value="Horários: " />
-							<h:selectManyListbox class="form-control"
-								value="#{pessoaMB.horarioList}" converter="javax.faces.Integer">
-								<f:selectItems value="#{horarioMB.horarioList}" var="horario"
-									itemValue="#{horario.idHorario}"
-									itemLabel="#{horario.dia} / #{horario.turno}" />
-							</h:selectManyListbox>
-							<p></p>
-						</div>
-
-
-					</div>
-					<div class="col-xs-6 col-md-4 direita">
-
-						<h:outputLabel class="control-label" value="Login: " />
-						<h:inputText class="form-control" value="#{pessoaMB.login}"></h:inputText>
-						<p></p>
-						<h:outputLabel class="control-label" value="Senha: " />
-						<h:inputSecret class="form-control" value="#{pessoaMB.senha}"></h:inputSecret>
-						<p></p>
-						<h:outputLabel class="control-label" value="Repita sua Senha: " />
-						<h:inputSecret class="form-control" value="#{pessoaMB.confirmarSenha}"></h:inputSecret>
 						<p></p>
 
 						<h:commandButton class="btn btn-success botao"
-							action="#{pessoaMB.gravar}" value="Gravar" id="btnCadastrar" />
+							action="#{turmaMB.gravar}" value="Gravar" id="btnCadastrar" />
 						<h:commandButton class="btn btn-danger botao " action="index"
 							value="Cancelar" />
 						<br /> <br />
 						<p></p>
-						<h:outputLabel value="#{pessoaMB.msgAviso}" />
+						<h:outputLabel value="#{turmaMB.msgAviso}" />
 						<h:messages id="msgErro" style="color: red"></h:messages>
 					</div>
 				</div>

@@ -281,22 +281,19 @@ public class VendaMB {
 
 				}
 
-				
 				float valor = 0;
-			
+
 				for (ProdutoItem produto : ProdutoList) {
 					valor += (produto.getItem().getValor() * produto
 							.getProduto().getQuantidade());
-					
-					
 
 				}
-					
+
 				if (tipoPessoa.equals("aluno")) {
 					valor = (float) (valor * 0.90);
 
 				}
-				
+
 				valorTotal = String.valueOf(valor);
 
 			} else {
@@ -338,11 +335,7 @@ public class VendaMB {
 						venda.getIdVenda(), p.getProduto().getQuantidade(), p
 								.getItem().getValor());
 				ejbItemVenda.save(itemvenda);
-				System.out.println("ID:::" + p.getItem().getIdItem());
 				produtoEstoque = ejbProduto.find(p.getItem().getIdItem());
-				System.out.println("qUANTIDADE:::"
-						+ (produtoEstoque.getQuantidade() - p.getProduto()
-								.getQuantidade()));
 
 				ejbProduto
 						.updateEstoque((produtoEstoque.getQuantidade() - p

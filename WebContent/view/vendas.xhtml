@@ -27,35 +27,30 @@
 
 <h:body>
 	<h:form>
-		<p:menubar autoDisplay="false">
-			<p:submenu rendered="#{usuarioMB.tipoPessoa == 'funcionario'}"
-				label="Usuários">
-				<p:menuitem value="Cadastrar Usuários"
-					url="#{request.pathInfo}/view/usuarios.xhtml" />
-				<p:menuitem value="Cadastrar Deficiencias"
-					url="#{request.pathInfo}/view/deficiencias.xhtml" />
-			</p:submenu>
-			<p:submenu label="Turmas">
-				<p:menuitem
-					rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}"
-					value="Cadastrar turmas" url="#"></p:menuitem>
-				<p:menuitem
-					rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}"
-					value="Matrícula" url="#"></p:menuitem>
-			</p:submenu>
-			<p:submenu label="Loja">
-				<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}"
-					value="Cadastrar Itens" url="#{request.pathInfo}/view/itens.xhtml"></p:menuitem>
-				<p:menuitem value="Vendas"
-					url="#{request.pathInfo}/view/vendas.xhtml"></p:menuitem>
-			</p:submenu>
-			<f:facet name="options">
-				<p:commandButton action="#{usuarioMB.logout}" type="button"
-					value="Logout" icon="ui-icon-extlink" />
-			</f:facet>
-		</p:menubar>
+	<p:menubar autoDisplay="false">
+		<p:submenu rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" label="Usuários">
+			<p:menuitem value="Cadastrar Usuários"
+				url="#{request.pathInfo}/view/usuarios.xhtml" />
+			<p:menuitem value="Cadastrar Deficiencias"
+				url="#{request.pathInfo}/view/deficiencias.xhtml" />
+		</p:submenu>
+		<p:submenu label="Turmas">
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}" value="Cadastrar turmas"
+				url="#{request.pathInfo}/view/turmas.xhtml"></p:menuitem>
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}" value="Matrícula"
+				url="#{request.pathInfo}/view/matricula.xhtml"></p:menuitem>
+		</p:submenu>
+		<p:submenu label="Loja">
+			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" value="Cadastrar Itens"
+				url="#{request.pathInfo}/view/itens.xhtml"></p:menuitem>
+			<p:menuitem value="Vendas"
+				url="#{request.pathInfo}/view/vendas.xhtml"></p:menuitem>
+		</p:submenu>
+		<f:facet name="options">
+			<p:commandButton action="#{usuarioMB.logout}" type="button" value="Logout" icon="ui-icon-extlink" />
+		</f:facet>
+	</p:menubar>
 	</h:form>
-
 	<div class="titulo-pagina">
 		<h1>Vendas de Produtos</h1>
 	</div>

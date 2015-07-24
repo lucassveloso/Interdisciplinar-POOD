@@ -26,4 +26,27 @@ public class HorarioPessoaBean  {
 		}
 	}
 	
+	public ArrayList<HorarioPessoa> findPorHorario(int idHorario) throws Exception{
+		try
+		{
+			HorarioPessoaDao dao = new HorarioPessoaDao();
+			
+			return dao.findHorario(idHorario);
+		}catch(Exception ex)
+		{
+			throw new Exception("Erro ao salvar: "+ex.getMessage());
+		}
+	}
+	
+	public ArrayList<HorarioPessoa> findPorPessoa(int idPessoa) throws Exception{
+		try
+		{
+			HorarioPessoaDao dao = new HorarioPessoaDao();
+			
+			return dao.findPessoa(idPessoa);
+		}catch(Exception ex)
+		{
+			throw new Exception("Erro ao salvar: "+ex.getMessage());
+		}
+	}
 }

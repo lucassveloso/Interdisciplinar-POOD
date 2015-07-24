@@ -4,7 +4,7 @@ public class Matricula {
 
 	private int idPessoa;
 	private int idTurma;
-	public Matricula(int idPessoa, int idTurma) {
+	public Matricula(int idTurma, int idPessoa) {
 		this.idPessoa = idPessoa;
 		this.idTurma = idTurma;
 	}

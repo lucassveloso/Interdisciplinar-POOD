@@ -22,12 +22,12 @@ public class HorarioPessoaDao extends GenericDao implements IDao<HorarioPessoa> 
 		executeSQL(INSERT, obj.getIdPessoa(), obj.getIdHorario());
 	}
 
-	public HorarioPessoa findPessoa(HorarioPessoa obj) throws Exception {
-		HorarioPessoa l = null;
+	public ArrayList<HorarioPessoa> findPessoa(int id) throws Exception {
+		ArrayList<HorarioPessoa> l = new ArrayList<HorarioPessoa>();
 		try {
-			ResultSet rs = executeQuery(SELECTPESSOA, obj.getIdPessoa());
-			if (rs.next()) {
-				return l = new HorarioPessoa(rs.getInt("Id_pessoa"),rs.getInt("Id_horario"));
+			ResultSet rs = executeQuery(SELECTPESSOA, id);
+			while (rs.next()) {
+				l.add(new HorarioPessoa(rs.getInt("Id_pessoa"),rs.getInt("Id_horario")));
 			}
 		} catch (Exception e) {
 			throw new Exception("Id incorreto! " + e.getMessage());
@@ -35,12 +35,12 @@ public class HorarioPessoaDao extends GenericDao implements IDao<HorarioPessoa> 
 		return l;
 	}
 	
-	public HorarioPessoa findHorario(HorarioPessoa obj) throws Exception {
-		HorarioPessoa l = null;
+	public ArrayList<HorarioPessoa> findHorario(int id) throws Exception {
+		ArrayList<HorarioPessoa> l = new ArrayList<HorarioPessoa>();
 		try {
-			ResultSet rs = executeQuery(SELECTHORARIO, obj.getIdHorario());
-			if (rs.next()) {
-				return l = new HorarioPessoa(rs.getInt("Id_pessoa"),rs.getInt("Id_horario"));
+			ResultSet rs = executeQuery(SELECTHORARIO, id);
+			while  (rs.next()) {
+				l.add(new HorarioPessoa(rs.getInt("Id_pessoa"),rs.getInt("Id_horario")));
 			}
 		} catch (Exception e) {
 			throw new Exception("Id incorreto! " + e.getMessage());

@@ -3,6 +3,7 @@ package br.edu.qi.dao;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import br.edu.qi.dto.HorarioPessoa;
 import br.edu.qi.dto.HorarioTurma;
 
 public class HorarioTurmaDao extends GenericDao implements IDao<HorarioTurma> {
@@ -19,13 +20,13 @@ public class HorarioTurmaDao extends GenericDao implements IDao<HorarioTurma> {
 	private static final String FINDALL = "select * from horario_turmas";
 
 	public void save(HorarioTurma obj) throws Exception {
-		executeSQL(INSERT, obj.getidTurma(), obj.getIdHorario());
+		executeSQL(INSERT, obj.getIdHorario(), obj.getidTurma());
 	}
 
-	public HorarioTurma findPessoa(HorarioTurma obj) throws Exception {
+	public HorarioTurma findTurma(int id) throws Exception {
 		HorarioTurma l = null;
 		try {
-			ResultSet rs = executeQuery(SELECTTURMA, obj.getidTurma());
+			ResultSet rs = executeQuery(SELECTTURMA, id);
 			if (rs.next()) {
 				return l = new HorarioTurma(rs.getInt("Id_turma"),rs.getInt("Id_horario"));
 			}
@@ -35,12 +36,12 @@ public class HorarioTurmaDao extends GenericDao implements IDao<HorarioTurma> {
 		return l;
 	}
 	
-	public HorarioTurma findHorario(HorarioTurma obj) throws Exception {
-		HorarioTurma l = null;
+	public ArrayList<HorarioTurma> findHorario(int id) throws Exception {
+		ArrayList<HorarioTurma> l = new ArrayList<HorarioTurma>();
 		try {
-			ResultSet rs = executeQuery(SELECTHORARIO, obj.getIdHorario());
-			if (rs.next()) {
-				return l = new HorarioTurma(rs.getInt("Id_turma"),rs.getInt("Id_horario"));
+			ResultSet rs = executeQuery(SELECTHORARIO, id);
+			while (rs.next()) {
+				l.add(new HorarioTurma(rs.getInt("Id_turma"),rs.getInt("Id_horario")));
 			}
 		} catch (Exception e) {
 			throw new Exception("Id incorreto! " + e.getMessage());

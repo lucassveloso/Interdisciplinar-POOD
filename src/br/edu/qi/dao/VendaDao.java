@@ -3,7 +3,6 @@ package br.edu.qi.dao;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import br.edu.qi.dto.Pessoa;
 import br.edu.qi.dto.Venda;
 
 public class VendaDao extends GenericDao  {

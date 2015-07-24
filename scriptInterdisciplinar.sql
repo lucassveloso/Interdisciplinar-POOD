@@ -87,10 +87,13 @@ FOREIGN KEY(Id_pessoa) REFERENCES Pessoas (Id_pessoa)
 CREATE TABLE Turmas (
 Id_turma Int PRIMARY KEY auto_increment,
 Id_curso Int,
+Id_Professor Int,
 Capacidade Int,
 Data_fim Datetime,
 Data_inicio Datetime,
-Tema Varchar(70)
+Tema Varchar(70),
+FOREIGN KEY(Id_Professor) REFERENCES Pessoas (Id_pessoa),
+FOREIGN KEY(Id_curso) REFERENCES Cursos (Id_curso)
 );
 
 
@@ -204,7 +207,6 @@ ALTER TABLE Alunos ADD FOREIGN KEY(Id_pessoa) REFERENCES Pessoas (Id_pessoa);
 ALTER TABLE Professores ADD FOREIGN KEY(Id_pessoa) REFERENCES Pessoas (Id_pessoa);
 ALTER TABLE Usuarios ADD FOREIGN KEY(Id_pessoa) REFERENCES Pessoas (Id_pessoa);
 ALTER TABLE Pessoas ADD FOREIGN KEY(Id_sexo) REFERENCES Sexo (Id_sexo);
-ALTER TABLE Turmas ADD FOREIGN KEY(Id_curso) REFERENCES Cursos (Id_curso);
 
 
 insert into Sexo values (1,"Masculino");

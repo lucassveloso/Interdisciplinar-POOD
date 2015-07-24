@@ -1,10 +1,8 @@
 package br.edu.qi.dao;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import br.edu.qi.dto.ItemVenda;
-import br.edu.qi.dto.Deficiencia;
 
 public class ItemVendaDao extends GenericDao implements IDao<ItemVenda> {
 	

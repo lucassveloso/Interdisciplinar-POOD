@@ -1,10 +1,8 @@
 package br.edu.qi.dao;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import br.edu.qi.dto.DeficPessoa;
-import br.edu.qi.dto.Deficiencia;
 
 public class DeficPessoaDao extends GenericDao implements IDao<DeficPessoa> {
 	

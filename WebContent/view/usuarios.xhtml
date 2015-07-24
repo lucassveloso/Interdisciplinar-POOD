@@ -35,9 +35,9 @@
 		</p:submenu>
 		<p:submenu label="Turmas">
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}" value="Cadastrar turmas"
-				url="#"></p:menuitem>
+				url="#{request.pathInfo}/view/turmas.xhtml"></p:menuitem>
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}" value="Matrícula"
-				url="#"></p:menuitem>
+				url="#{request.pathInfo}/view/matricula.xhtml"></p:menuitem>
 		</p:submenu>
 		<p:submenu label="Loja">
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" value="Cadastrar Itens"
@@ -93,7 +93,7 @@
 						<p></p>
 
 						<h:outputLabel class="control-label" value="Deficiência: " />
-						<h:selectManyListbox class="form-control" id="subscriptions"
+						<h:selectManyListbox class="form-control"
 							value="#{pessoaMB.deficienciaList}"
 							converter="javax.faces.Integer">
 							<f:selectItems class="deficiencias"

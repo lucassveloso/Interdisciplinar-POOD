@@ -42,7 +42,7 @@ public class CursoDao extends GenericDao implements IDao<Curso> {
 			while (rs.next()) {
 				l.add(new Curso(
 						rs.getInt("Id_curso"),
-						rs.getString("F_pagamento")));
+						rs.getString("descricao")));
 			}
 		} catch (Exception e) {
 			throw new Exception(

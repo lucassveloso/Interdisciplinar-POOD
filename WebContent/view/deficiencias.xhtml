@@ -35,9 +35,9 @@
 		</p:submenu>
 		<p:submenu label="Turmas">
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'professor'}" value="Cadastrar turmas"
-				url="#"></p:menuitem>
+				url="#{request.pathInfo}/view/turmas.xhtml"></p:menuitem>
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario' or usuarioMB.tipoPessoa == 'aluno'}" value="Matrícula"
-				url="#"></p:menuitem>
+				url="#{request.pathInfo}/view/matricula.xhtml"></p:menuitem>
 		</p:submenu>
 		<p:submenu label="Loja">
 			<p:menuitem rendered="#{usuarioMB.tipoPessoa == 'funcionario'}" value="Cadastrar Itens"
@@ -50,7 +50,6 @@
 		</f:facet>
 	</p:menubar>
 	</h:form>
-
 	<div class="titulo-pagina">
 		<h1>Cadastro de Deficiêcias</h1>
 	</div>
